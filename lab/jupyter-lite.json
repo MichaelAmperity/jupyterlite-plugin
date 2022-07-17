@@ -8,8 +8,8 @@
       "@jupyterlab-kernel-spy",
       "@jupyterlab-tour"
     ],
-    "litePluginSettings": {
-      "@jupyterlite/statusbar-extension:plugin":{
+    "labPluginSettings": {
+      "@jupyterlab/statusbar-extension:plugin":{
         "visible": false,
         "startMode": "single"
       }
