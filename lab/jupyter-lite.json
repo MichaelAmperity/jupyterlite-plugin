@@ -7,7 +7,7 @@
       "@jupyterlab/drawio-extension",
       "@jupyterlab-kernel-spy",
       "@jupyterlab-tour"
-    ]
+    ],
      "@jupyterlab/statusbar-extension:plugin":
     {
       "visible": false,
