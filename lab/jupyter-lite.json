@@ -7,6 +7,12 @@
       "@jupyterlab/drawio-extension",
       "@jupyterlab-kernel-spy",
       "@jupyterlab-tour"
-    ]
+    ],
+    "settingsOverrides": {
+      "@jupyterlab/statusbar-extension:plugin": {
+      "startMode": "single",
+      "visible": false
+      }
+    }
   }
 }
