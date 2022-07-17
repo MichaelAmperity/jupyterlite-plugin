@@ -12,6 +12,7 @@
       "@jupyterlite/pyolite-kernel-extension:kernel": {
         "visible": false,
         "startMode": "single"
+      }
     }
   }
 }
