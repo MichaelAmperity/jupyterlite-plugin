@@ -1,6 +1,6 @@
 {    
-  "@jupyterlab/statusbar-extension:plugin":{
-        "visible": false,
-        "startMode": "single"
-      }
+  "@jupyterlab/statusbar-extension:plugin": {
+    "startMode": "single",
+    "visible": false
+  }
 }
