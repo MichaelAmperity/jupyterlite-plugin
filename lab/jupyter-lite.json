@@ -9,7 +9,7 @@
       "@jupyterlab-tour"
     ],
     "litePluginSettings": {
-      "@jupyterlab/statusbar-extension:plugin":{
+      "@jupyterlite/statusbar-extension:plugin":{
         "visible": false,
         "startMode": "single"
       }
