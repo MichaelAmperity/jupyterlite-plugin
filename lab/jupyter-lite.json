@@ -6,7 +6,7 @@
     "disabledExtensions": [
       "@jupyterlab/drawio-extension",
       "@jupyterlab-kernel-spy",
-      "@jupyterlab-tour"
+      "jupyterlab-tour"
     ],
     "settingsOverrides": {
       "@jupyterlab/statusbar-extension:plugin": {
