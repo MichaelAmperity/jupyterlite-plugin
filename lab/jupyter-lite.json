@@ -5,8 +5,8 @@
     "themesUrl": "./build/themes",
     "disabledExtensions": [
       "@jupyterlab/drawio-extension",
-      "jupyterlab-kernel-spy",
-      "jupyterlab-tour"
+      "@jupyterlab-kernel-spy",
+      "@jupyterlab-tour"
     ]
   }
 }
