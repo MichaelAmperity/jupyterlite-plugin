@@ -6,8 +6,8 @@
     "disabledExtensions": [
       "@jupyterlab/drawio-extension",
       "@jupyterlab-kernel-spy",
-      "jupyterlab-tour:user-tours": true,
-      "jupyterlab-tour:default-tours": true
+      "@jupyterlab-tour:user-tours",
+      "@jupyterlab-tour:default-tours"
     ],
     "settingsOverrides": {
       "@jupyterlab/statusbar-extension:plugin": {
