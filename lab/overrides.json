@@ -1,0 +1,6 @@
+{    
+  "@jupyterlab/statusbar-extension:plugin":{
+        "visible": false,
+        "startMode": "single"
+      }
+}
