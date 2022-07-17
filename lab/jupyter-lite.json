@@ -3,9 +3,7 @@
   "jupyter-config-data": {
     "settingsUrl": "../build/schemas",
     "themesUrl": "./build/themes"
-  },
-  "jupyter-config-data": {
-  "disabledExtensions": [
+    "disabledExtensions": [
      "@jupyterlab/drawio-extension",
      "jupyterlab-kernel-spy",
      "jupyterlab-tour"
