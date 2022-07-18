@@ -33,11 +33,20 @@
         );
       }.call(this));
       
+      let InjectTimer = null;
       document.onreadystatechange = function () {
         if (document.readyState == "complete") {
-          document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
-          // ctrl b
-          // put in code for on first cell, run, minimize
+          function tryToInject () { 
+              if (document.querySelector('.CodeMirror') != null)
+              {
+                clearInterval(InjectTimer);
+                document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
+                // ctrl b
+                // put in code for on first cell, run, minimize
+              }
+          }
+          InjectTimer = setInterval(tryToInject, 100);
+
         }
       }
       
