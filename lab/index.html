@@ -48,12 +48,16 @@
 
             setTimeout(async function runOnPage(){
 
-              // put data in
-              document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
-              await delay(100);
-
               // set code
               document.querySelector('[data-command="notebook:change-cell-to-code"]').click();
+              await delay(100);
+
+              //need to expand to paste in code
+              document.querySelector('[data-command="notebook:show-cell-code"]').click();
+              await delay(100);
+
+              // put data in
+              document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
               await delay(100);
 
               // run
