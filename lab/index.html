@@ -34,19 +34,45 @@
       }.call(this));
       
       let InjectTimer = null;
+      function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
       function tryToInject () { 
+        console.log("trying");
+
           if (document.querySelector('.CodeMirror') != null)
           {
+            
             clearInterval(InjectTimer);
-            document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
-            console.log("doing");
-            // ctrl b
-            // put in code for on first cell, run, minimize
+            console.log("running");
+
+            setTimeout(async function runOnPage(){
+
+              // put data in
+              document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
+              await delay(100);
+
+              // set code
+              document.querySelector('[data-command="notebook:change-cell-to-code"]').click();
+              await delay(100);
+
+              // run
+              document.querySelector('[data-command="notebook:run-cell"]').click();
+              await delay(100);
+
+              //minimise
+              document.querySelector('[data-command="notebook:hide-cell-code"]').click();
+              await delay(100);
+
+              // ctrl b
+              await delay(100);
+              document.querySelector('[data-command="application:toggle-left-area"]').click();
+              
+            }, 800);
           }
-                    console.log("trying");
 
       }
-      InjectTimer = setInterval(tryToInject, 100);
+      InjectTimer = setInterval(tryToInject, 200);
       
       window.addEventListener('message', 
         function (e) 
