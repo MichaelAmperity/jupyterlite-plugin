@@ -34,10 +34,11 @@
       }.call(this));
       
       document.onreadystatechange = function () {
-      if (document.readyState == "complete") {
-        document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
-        // ctrl b
-        // put in code for on first cell, run, minimize
+        if (document.readyState == "complete") {
+          document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
+          // ctrl b
+          // put in code for on first cell, run, minimize
+        }
       }
       
       window.addEventListener('message', 
