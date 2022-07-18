@@ -33,15 +33,12 @@
         );
       }.call(this));
       
-      
-      (async function () {
-        await import(
-          '../config-utils.js?_=8cb1e60'
-        );
+      document.onreadystatechange = function () {
+      if (document.readyState == "complete") {
         document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
         // ctrl b
         // put in code for on first cell, run, minimize
-      }.call(this));
+      }
       
       window.addEventListener('message', 
         function (e) 
