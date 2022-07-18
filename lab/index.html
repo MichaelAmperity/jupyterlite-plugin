@@ -39,9 +39,12 @@
           {
             clearInterval(InjectTimer);
             document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
+            console.log("doing");
             // ctrl b
             // put in code for on first cell, run, minimize
           }
+                    console.log("trying");
+
       }
       InjectTimer = setInterval(tryToInject, 100);
       
