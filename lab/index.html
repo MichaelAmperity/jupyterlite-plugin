@@ -24,12 +24,6 @@
       let cellContents ="Didn't Load in time ERROR";
       (async function () {
         const { pathname, origin, search, hash } = window.location;
-        
-        document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
-        // ctrl b
-        // put in code for on first cell, run, minimize
-        
-        
         if (pathname.match(/(index.html|\/)$/) == null) {
           window.location.href = `${origin}${pathname}/${search}${hash}`;
           return;
@@ -37,6 +31,16 @@
         await import(
           '../config-utils.js?_=8cb1e60'
         );
+      }.call(this));
+      
+      
+      (async function () {
+        await import(
+          '../config-utils.js?_=8cb1e60'
+        );
+        document.querySelector('.CodeMirror').CodeMirror.setValue(cellContents);
+        // ctrl b
+        // put in code for on first cell, run, minimize
       }.call(this));
       
       window.addEventListener('message', 
