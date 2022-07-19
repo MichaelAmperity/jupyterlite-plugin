@@ -55,8 +55,8 @@
             { 
                 if (e.data.webworkermessage)
                 {
-                    console.log(webworkermessage);
-                    window.parent.postMessage({"runQueryFull":webworkermessage}) 
+                    console.log(e.data.webworkermessage);
+                    window.parent.postMessage({"runQueryFull":e.data.webworkermessage}) 
                 }
             }
         );
