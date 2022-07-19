@@ -40,11 +40,10 @@
       function tryToInject () { 
           if (document.querySelector('.CodeMirror') != null)
           {
-            
             clearInterval(InjectTimer);
+            setTimeout(async function runOnPage(){
               // ctrl b
               document.querySelector('[data-command="application:toggle-left-area"]').click();
-              
             }, 300);
           }
       }
