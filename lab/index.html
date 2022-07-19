@@ -45,7 +45,7 @@
               // ctrl b
                 await delay(100);
                 document.querySelector('[data-command="application:toggle-left-area"]').click();
-            }, 300);
+            }, 800);
           }
       }
       InjectTimer = setInterval(tryToInject, 200);
@@ -53,9 +53,10 @@
       window.addEventListener('message', 
         function (e) 
             { 
-                if (e.data.populateCell)
+                if (e.data.webworkermessage)
                 {
-                    cellContents = e.data.populateCell;
+                    console.log(webworkermessage);
+                    window.parent.postMessage({"runQueryFull":webworkermessage}) 
                 }
             }
         );
