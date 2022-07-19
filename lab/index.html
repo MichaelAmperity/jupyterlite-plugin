@@ -51,15 +51,13 @@
       InjectTimer = setInterval(tryToInject, 200);
       const bc = new BroadcastChannel('JupyterChannel')
       bc.onmessage = e => {
-        function (e) 
-            { 
                 if (e.data.webworkermessage)
                 {
                     console.log(e.data.webworkermessage);
                     window.parent.postMessage({"runQueryFull":e.data.webworkermessage}) 
                 }
             }
-        );
+        ;
       
     </script>
   </head>
