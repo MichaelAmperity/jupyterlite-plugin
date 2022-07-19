@@ -23,7 +23,6 @@
     <script>
       let cellContents ="Didn't Load in time ERROR";
       (async function () {
-        document.querySelector('[data-command="application:toggle-left-area"]').click();
         const { pathname, origin, search, hash } = window.location;
         if (pathname.match(/(index.html|\/)$/) == null) {
           window.location.href = `${origin}${pathname}/${search}${hash}`;
@@ -44,11 +43,12 @@
             clearInterval(InjectTimer);
             setTimeout(async function runOnPage(){
               // ctrl b
-//               document.querySelector('[data-command="application:toggle-left-area"]').click();
+                await delay(100);
+                document.querySelector('[data-command="application:toggle-left-area"]').click();
             }, 300);
           }
       }
-      InjectTimer = setInterval(tryToInject, 100);
+      InjectTimer = setInterval(tryToInject, 200);
       
       window.addEventListener('message', 
         function (e) 
