@@ -44,13 +44,13 @@
             setTimeout(async function runOnPage(){
               // ctrl b
                 await delay(100);
-                document.querySelector('[data-command="application:toggle-left-area"]').click();
+               // document.querySelector('[data-command="application:toggle-left-area"]').click();
             }, 800);
           }
       }
       InjectTimer = setInterval(tryToInject, 200);
-      
-      window.addEventListener('message', 
+      const bc = new BroadcastChannel('JupyterChannel')
+      bc.onmessage = e => {
         function (e) 
             { 
                 if (e.data.webworkermessage)
