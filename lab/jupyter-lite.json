@@ -11,7 +11,7 @@
     "settingsOverrides": {
       "@jupyterlab/statusbar-extension:plugin": {
       "startMode": "single",
-      "visible": false
+      "visible": true
       }
     }
   }
