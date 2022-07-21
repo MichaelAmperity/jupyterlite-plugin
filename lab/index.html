@@ -21,7 +21,7 @@
       {}
     </script>
     <script>
-      let cellContents ="Didn't Load in time ERROR";
+
       (async function () {
         const { pathname, origin, search, hash } = window.location;
         if (pathname.match(/(index.html|\/)$/) == null) {
@@ -32,33 +32,18 @@
           '../config-utils.js?_=8cb1e60'
         );
       }.call(this));
-      
-      let InjectTimer = null;
-      function delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
-      function tryToInject () { 
-          if (document.querySelector('.CodeMirror') != null)
-          {
-            clearInterval(InjectTimer);
-            setTimeout(async function runOnPage(){
-              // ctrl b
-                await delay(100);
-               // document.querySelector('[data-command="application:toggle-left-area"]').click();
-            }, 800);
-          }
-      }
-      InjectTimer = setInterval(tryToInject, 200);
+
+      // communication with Jupyter kernal, forward to setuppage.js
       const bc = new BroadcastChannel('JupyterChannel')
       bc.onmessage = e => {
-                if (e.data.webworkermessage)
-                {
-                    console.log(e.data.webworkermessage);
-                    window.parent.postMessage({"runQueryFull":e.data.webworkermessage}) 
-                }
-            }
-        ;
-      
+          window.parent.postMessage(e.data,'*');
+      }
+
+      // communication with setuppage.js, store and be ready to send to jupyter
+      window.addEventListener('message', function(e) 
+      { 
+        bc.postMessage(e.data,'*');
+      });
     </script>
   </head>
 </html>
