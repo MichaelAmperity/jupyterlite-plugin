@@ -34,7 +34,7 @@
       }.call(this));
 
       // communication with Jupyter kernal, forward to setuppage.js
-      const bc = new BroadcastChannel('JupyterChannel')
+      const bc = new BroadcastChannel('JupyterChannel');
       bc.onmessage = e => {
           window.parent.postMessage(e.data,'*');
       }
