@@ -36,12 +36,14 @@
       // communication with Jupyter kernal, forward to setuppage.js
       const bc = new BroadcastChannel('JupyterChannel');
       bc.onmessage = e => {
+          window.onbeforeunload = null;
           window.parent.postMessage(e.data,'*');
       }
 
       // communication with setuppage.js, store and be ready to send to jupyter
       window.addEventListener('message', function(e) 
       { 
+        window.onbeforeunload = null;
         bc.postMessage(e.data,'*');
       });
     </script>
