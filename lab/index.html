@@ -31,6 +31,7 @@
         await import(
           '../config-utils.js?_=8cb1e60'
         );
+        window.removeEventListener('beforeunload',getEventListeners(window).beforeunload[0].listener);
       }.call(this));
 
       // communication with Jupyter kernal, forward to setuppage.js
