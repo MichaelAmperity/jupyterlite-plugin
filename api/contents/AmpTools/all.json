@@ -2,20 +2,20 @@
   "content": [
     {
       "content": null,
-      "created": "2022-07-25T17:39:09.629765Z",
+      "created": "2022-07-25T19:17:26.955174Z",
       "format": null,
-      "last_modified": "2022-07-25T17:37:57.452456Z",
+      "last_modified": "2022-07-25T19:16:23.122274Z",
       "mimetype": "text/x-python",
       "name": "load.py",
-      "path": "AmpTools.load.py",
+      "path": "AmpTools/load.py",
       "size": 3597,
       "type": "file",
       "writable": true
     }
   ],
-  "created": "2022-07-25T17:39:09.629765Z",
+  "created": "2022-07-25T19:17:26.955174Z",
   "format": "json",
-  "last_modified": "2022-07-25T17:39:09.629765Z",
+  "last_modified": "2022-07-25T19:17:26.955174Z",
   "mimetype": null,
   "name": "AmpTools",
   "path": "AmpTools",
