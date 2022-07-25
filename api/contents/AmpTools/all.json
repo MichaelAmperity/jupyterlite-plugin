@@ -1,0 +1,25 @@
+{
+  "content": [
+    {
+      "content": null,
+      "created": "2022-07-25T17:39:09.629765Z",
+      "format": null,
+      "last_modified": "2022-07-25T17:37:57.452456Z",
+      "mimetype": "text/x-python",
+      "name": "__init__.py",
+      "path": "AmpTools/__init__.py",
+      "size": 3597,
+      "type": "file",
+      "writable": true
+    }
+  ],
+  "created": "2022-07-25T17:39:09.629765Z",
+  "format": "json",
+  "last_modified": "2022-07-25T17:39:09.629765Z",
+  "mimetype": null,
+  "name": "AmpTools",
+  "path": "AmpTools",
+  "size": null,
+  "type": "directory",
+  "writable": true
+}
