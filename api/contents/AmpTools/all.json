@@ -6,8 +6,8 @@
       "format": null,
       "last_modified": "2022-07-25T17:37:57.452456Z",
       "mimetype": "text/x-python",
-      "name": "__init__.py",
-      "path": "AmpTools/__init__.py",
+      "name": "load.py",
+      "path": "AmpTools.load.py",
       "size": 3597,
       "type": "file",
       "writable": true
