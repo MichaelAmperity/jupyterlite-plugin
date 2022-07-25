@@ -31,6 +31,19 @@
           '../config-utils.js?_=8cb1e60'
         );
       }.call(this));
+
+      // communication with Jupyter kernal, forward to setuppage.js
+      const bc = new BroadcastChannel('JupyterChannel');
+      bc.onmessage = e => {
+          window.parent.postMessage(e.data,'*');
+      }
+
+      // communication with setuppage.js, store and be ready to send to jupyter
+      window.addEventListener('message', function(e) 
+      { 
+        bc.postMessage(e.data,'*');
+      });
+
     </script>
   </head>
 </html>
