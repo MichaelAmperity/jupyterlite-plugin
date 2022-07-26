@@ -35,18 +35,6 @@
       "size": null,
       "type": "directory",
       "writable": true
-    },
-    {
-      "content": null,
-      "created": "2022-07-26T00:03:23.592344Z",
-      "format": null,
-      "last_modified": "2022-07-26T00:03:20.668303Z",
-      "mimetype": "text/markdown",
-      "name": "README.md",
-      "path": "README.md",
-      "size": 941,
-      "type": "file",
-      "writable": true
     }
   ],
   "created": "2022-07-26T00:03:23.616344Z",
