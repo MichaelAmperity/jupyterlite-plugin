@@ -1,3 +1,5 @@
+# can't do the normal __init__ because underscores make it break when it fetches from a web url
+
 
 import textwrap
 from js import eval, TextDecoder, Uint8Array
@@ -36,8 +38,8 @@ try:
     eval(toolsListening)
 except:
     eval(jscommand)
-
-async def make_query(query_style, query):   
+    
+async def _make_query(query_style, query):   
     print("sending query")
     global last_run
     query = re.sub(r'--(.*?)\n','\n',query)
@@ -48,23 +50,31 @@ async def make_query(query_style, query):
     last_run = False
     eval("status = \"N/A\";results = false;")
     eval("bc.postMessage({\""+query_style+"\":\""+query+"\"}, \"*\");")
-    while status.split(":")[0]!="finished":
+    while (status.split(":")[0]!="finished" and status.split(":")[0]!="error"):
         await asyncio.sleep(.8)
         status = eval("status")
         clear_output()
         print(status)
-    from js import results
-    enc = TextDecoder.new("utf-8")
-    last_run = pd.read_csv(StringIO(enc.decode(Uint8Array.new(results))), dtype=object)
-    return
+    clear_output()
+    print(status)
+    if (status.split(":")[0]=="finished"):
+        from js import results
+        enc = TextDecoder.new("utf-8")
+        last_run = pd.read_csv(StringIO(enc.decode(Uint8Array.new(results))), dtype=object)
+        return True
+    return False
 
 async def sql(query):
-    await make_query("page_query",query)
-    return get_last_run()
+    success = await _make_query("page_query",query)
+    if success:
+        return get_last_run()
+    return
 
 async def sql_full(query):
-    await make_query("download_query",query)
-    return get_last_run()
+    success = await _make_query("download_query",query)
+    if success:
+        return get_last_run()
+    return
 
 def open_ampid(amperity_id):
     eval("bc.postMessage({\"popup_ampID\":\""+ amperity_id +"\"}, \"*\");")
