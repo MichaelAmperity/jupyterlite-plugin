@@ -21,5 +21,3 @@ jupyter_bokeh
 SQLAlchemy
 jupyterlab-drawio
 jupyterlab-webrtc-docprovider
-jupyterlab-git
-lckr-jupyterlab-variableinspector
