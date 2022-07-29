@@ -23,4 +23,3 @@ jupyterlab-drawio
 jupyterlab-webrtc-docprovider
 jupyterlab-git
 lckr-jupyterlab-variableinspector
-qgrid2
