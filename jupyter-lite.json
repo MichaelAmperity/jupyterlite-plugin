@@ -120,13 +120,6 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.de7485c567da3d5fc865.js",
-        "name": "jupyterlab-filesystem-access",
-        "style": "./style"
-      },
-      {
-        "extension": "./extension",
-        "liteExtension": false,
         "load": "static/remoteEntry.66500334d7b36213676e.js",
         "mimeExtension": "./mimeExtension",
         "name": "jupyterlab-plotly"
