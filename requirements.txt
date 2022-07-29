@@ -20,4 +20,3 @@ theme-darcula
 jupyter_bokeh
 SQLAlchemy
 jupyterlab-drawio
-jupyterlab-filesystem-access
