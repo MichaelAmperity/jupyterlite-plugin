@@ -89,6 +89,22 @@ def sanddance(in_dataframe):
 def get_last_run():
     global last_run
     return last_run
+
+async def db_info(tenant_name, tenant_domain, tenant_is_sandbox):
+    eval("status = \"waiting\";results = false;")
+    eval("bc.postMessage({\"getdbinfo\":\"true\",\"tenant_name\":\""+
+         tenant_name+"\",\"tenant_domain\":\""+
+         tenant_domain+"\",\"tenant_is_sandbox\":\""+
+         tenant_is_sandbox+"\"}, \"*\");")
+    status = eval("status")
+    while (status.split(":")[0]!="finished" and status.split(":")[0]!="error"):
+        await asyncio.sleep(.8)
+        status = eval("status")
+        clear_output()
+        print(status)
+    from js import results
+    dbsinfo = pd.read_csv(StringIO(results))
+    return dbsinfo
     
 def amp_help():
     print("""await sql(\"\"\"
@@ -120,3 +136,9 @@ def amp_help():
           - Recommended to use a dataframe of 100k rows or less
           - If you load a large set it may take a five seconds or so to fully load up
           """)
+    
+    print("""df_of_info = await db_info("Acme", "AWS", "false")
+      - get dataframe of all the data explorer info for dynamic sql or comparing teanants
+      - give tenant name, tenant domain, is sandbox... to complete dataframe info.
+      - giving this df to sanddance works well for exploration
+      """)
