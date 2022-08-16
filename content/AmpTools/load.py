@@ -44,7 +44,7 @@ async def _make_query(query_style, query):
     global last_run
     query = re.sub(r'--(.*?)\n','\n',query)
     query = query.replace('\n', ' /* newline */ ').replace('\\', '\\\\')
-    query = query.replace('"',r'\"')
+    #query = query.replace('"',r'\"')
     status = "N/A"
     results = False
     last_run = False
