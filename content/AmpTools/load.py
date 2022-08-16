@@ -90,10 +90,9 @@ def get_last_run():
     global last_run
     return last_run
 
-async def db_info(tenant_name, tenant_domain, tenant_is_sandbox):
+async def db_info(tenant_domain='', tenant_is_sandbox=''):
     eval("status = \"waiting\";results = false;")
-    eval("bc.postMessage({\"getdbinfo\":\"true\",\"tenant_name\":\""+
-         tenant_name+"\",\"tenant_domain\":\""+
+    eval("bc.postMessage({\"getdbinfo\":\"true\",\"tenant_domain\":\""+
          tenant_domain+"\",\"tenant_is_sandbox\":\""+
          tenant_is_sandbox+"\"}, \"*\");")
     status = eval("status")
@@ -137,8 +136,9 @@ def amp_help():
           - If you load a large set it may take a five seconds or so to fully load up
           """)
     
-    print("""df_of_info = await db_info("Acme", "AWS", "false")
+    print("""df_of_info = await db_info()
       - get dataframe of all the data explorer info for dynamic sql or comparing teanants
+      - optionally can specific if is_sandbox or aws/az as parameters
       - give tenant name, tenant domain, is sandbox... to complete dataframe info.
       - giving this df to sanddance works well for exploration
       """)
