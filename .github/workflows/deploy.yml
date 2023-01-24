@@ -23,7 +23,7 @@ jobs:
           python -m pip install -r requirements2.txt
       - name: Build the JupyterLite site
         run: |
-          jupyter lite build --contents content --apps retro --no-unused-shared-packages -y --no-sourcemaps
+          jupyter lite build --contents content --apps retro --no-unused-shared-packages -y
       - name: Upload (dist)
         uses: actions/upload-artifact@v2
         with:
