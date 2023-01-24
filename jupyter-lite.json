@@ -2,7 +2,7 @@
   "jupyter-config-data": {
     "appName": "JupyterLite",
     "appUrl": "./lab",
-    "appVersion": "0.1.0-beta.18",
+    "appVersion": "0.1.0-beta.16",
     "baseUrl": "./",
     "collaborative": false,
     "defaultKernelName": "python",
@@ -34,6 +34,13 @@
         "load": "static/remoteEntry.f6be43672b078c208aab.js",
         "mimeExtension": "./mimeExtension",
         "name": "@jupyterlab/geojson-extension",
+        "style": "./style"
+      },
+      {
+        "extension": "./extension",
+        "liteExtension": false,
+        "load": "static/remoteEntry.df174daebca173550cf8.js",
+        "name": "@pyviz/jupyterlab_pyviz",
         "style": "./style"
       },
       {
