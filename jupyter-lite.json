@@ -2,7 +2,7 @@
   "jupyter-config-data": {
     "appName": "JupyterLite",
     "appUrl": "./lab",
-    "appVersion": "0.1.0-beta.18",
+    "appVersion": "0.1.0-beta.16",
     "baseUrl": "./",
     "collaborative": false,
     "defaultKernelName": "python",
@@ -39,14 +39,15 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.8a4c97071917cf84832f.js",
-        "name": "@telamonian/theme-darcula"
+        "load": "static/remoteEntry.df174daebca173550cf8.js",
+        "name": "@pyviz/jupyterlab_pyviz",
+        "style": "./style"
       },
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.145e469029155b53b350.js",
-        "name": "@timkpaine/jupyterlab_miami_nights"
+        "load": "static/remoteEntry.8a4c97071917cf84832f.js",
+        "name": "@telamonian/theme-darcula"
       },
       {
         "extension": "./extension",
