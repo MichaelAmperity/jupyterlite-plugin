@@ -322,6 +322,8 @@ async def run_sql(query):
     await asyncio.sleep(.2)
     with open('status.txt', 'r') as f:
         status = f.read()
+        clear_output()
+        print(status)
     if status.startswith('Completed:'):
         sql_df = pd.read_csv('data.csv')
         os.remove('data.csv')

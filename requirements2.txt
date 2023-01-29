@@ -18,5 +18,6 @@ matplotlib
 altair
 ipyvuetify
 jlab-enhanced-cell-toolbar
+cufflinks
 ./amperitycolors
 ./amperityfrontend
