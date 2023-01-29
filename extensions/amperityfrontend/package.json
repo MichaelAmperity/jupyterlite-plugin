@@ -93,7 +93,7 @@
     "extension": true,
     "outputDir": "amperityfrontend/labextension",
     "_build": {
-      "load": "static/remoteEntry.566cd19a0409c2b0aa77.js",
+      "load": "static/remoteEntry.80ba097c55911bdf8fc2.js",
       "extension": "./extension",
       "style": "./style"
     }
