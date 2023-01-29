@@ -1,4 +1,3 @@
-nbformat>=4.2.0
 bqplot
 ipycanvas>=0.9.1
 ipyevents>=2.0.1
@@ -19,7 +18,5 @@ matplotlib
 altair
 ipyvuetify
 jlab-enhanced-cell-toolbar
-dash
-jupyter-dash
 ./amperitycolors
 ./amperityfrontend
