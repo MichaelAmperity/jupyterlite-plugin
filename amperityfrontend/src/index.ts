@@ -225,6 +225,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
           var all_count_labels = document.querySelectorAll(".jp-OutputArea-prompt");
           all_count_labels[all_count_labels.length -1 ].innerHTML='';
           document.querySelectorAll<HTMLElement>(".jp-NotebookPanel-notebook")[0].style.top='0px'
+          document.getElementsByClassName('jp-OutputPrompt')[0].classList.remove('jp-OutputPrompt')
             
           // make for new cell toolbar
           function removeMouseOver()
@@ -289,9 +290,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
   
               try {
 
-                // delete data.txt
-                // delete status.txt
-                
                 let sql_to_run =`
 %pip install ipydatagrid
 import asyncio
@@ -332,6 +330,11 @@ async def run_sql(query):
         status = f.read()
         clear_output()
         print(status)
+    # handle one and no case
+    if status.startswith('No results:'):
+        pass
+    if status.startswith('One result:'):
+        pass
     if status.startswith('Completed:'):
         sql_df = pd.read_csv('data.csv')
         os.remove('data.csv')
@@ -341,15 +344,16 @@ async def run_sql(query):
 
   if status.startswith('Completed:'):
     displayout = ipywidgets.VBox([DataGrid(sql_df)])
-  else:
+  elif status.startswith('Error:'):
     out = ipywidgets.Output(layout={'border': '1px solid red'})
     displayout = ipywidgets.VBox([out])
+  else:
+    ipywidgets.VBox()
   return displayout
 
 query = """${code}"""
 await run_sql(query)`
 
-console.log(sql_to_run)
                 promise = executeFn(sql_to_run, output, sessionContext, metadata);
               }
               catch (e) {
