@@ -305,6 +305,14 @@ from IPython.display import Javascript, clear_output
 async def run_sql(query):
   query = re.sub(r'--(.*?)\\n','\\n',query)
   query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
+  try:
+    os.remove('status.txt')
+  except:
+    pass
+  try:
+    os.remove('data.csv')
+  except:
+    pass
   with open('status.txt', 'w') as f:
     f.write('pending')
   global sql_df
