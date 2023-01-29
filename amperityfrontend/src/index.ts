@@ -301,55 +301,50 @@ import ipywidgets
 from IPython.display import Javascript, clear_output
 
 async def run_sql(query):
-  query = re.sub(r'--(.*?)\\n','\\n',query)
-  query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
-  try:
-    os.remove('status.txt')
-  except:
-    pass
-  try:
-    os.remove('data.csv')
-  except:
-    pass
-  with open('status.txt', 'w') as f:
-    f.write('pending')
-  global sql_df
-  status = 'pending'
-  js_command = '''
-  window.postMessage(
-  {
-    notebookreact_msg_type: \"sql_request_from_cell\", 
-    sql_request:\"'''+query+'''\"
-  });
-  '''
-  get_ipython().run_cell_magic("javascript", "", js_command)
-  data = ''
-  while status=="pending":
-    await asyncio.sleep(.2)
-    with open('status.txt', 'r') as f:
-        status = f.read()
-        clear_output()
-        print(status)
-    # handle one and no case
-    if status.startswith('No results:'):
-        pass
-    if status.startswith('One result:'):
-        pass
-    if status.startswith('Completed:'):
-        sql_df = pd.read_csv('data.csv')
-        os.remove('data.csv')
-  clear_output()
-  print(status)
+query = re.sub(r'--(.*?)\\n','\\n',query)
+query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
+try:
   os.remove('status.txt')
+except:
+  pass
+try:
+  os.remove('data.csv')
+except:
+  pass
+with open('status.txt', 'w') as f:
+  f.write('Pending')
+global sql_df
+status = 'Pending'
+js_command = '''
+window.postMessage(
+{
+  notebookreact_msg_type: \"sql_request_from_cell\", 
+  sql_request:\"'''+query+'''\"
+});
+'''
+get_ipython().run_cell_magic("javascript", "", js_command)
+data = ''
+while status.startswith("Pending"):
+  await asyncio.sleep(.2)
+  with open('status.txt', 'r') as f:
+      status = f.read()
+      clear_output()
+      print(status)
+  if !(status.startswith('Error:')||status.startswith("Pending")):
+      sql_df = pd.read_csv('data.csv')
+      os.remove('data.csv')
+clear_output()
+print(status)
+os.remove('status.txt')
 
-  if status.startswith('Completed:'):
-    displayout = ipywidgets.VBox([DataGrid(sql_df)])
-  elif status.startswith('Error:'):
-    out = ipywidgets.Output(layout={'border': '1px solid red'})
-    displayout = ipywidgets.VBox([out])
-  else:
-    ipywidgets.VBox()
-  return displayout
+if status.startswith('Completed:'):
+  displayout = ipywidgets.VBox([DataGrid(sql_df)])
+elif status.startswith('Error:'):
+  out = ipywidgets.Output(layout={'border': '1px solid red'})
+  displayout = ipywidgets.VBox([out])
+else:
+  displayout = sql_df
+return displayout
 
 query = """${code}"""
 await run_sql(query)`
