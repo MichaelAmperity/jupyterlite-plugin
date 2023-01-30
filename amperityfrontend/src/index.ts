@@ -224,8 +224,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
           document.querySelectorAll(".jp-OutputCollapser")[0].remove();
           var all_count_labels = document.querySelectorAll(".jp-OutputArea-prompt");
           all_count_labels[all_count_labels.length -1 ].innerHTML='';
-          document.querySelectorAll<HTMLElement>(".jp-NotebookPanel-notebook")[0].style.top='0px'
-          document.getElementsByClassName('jp-OutputPrompt')[0].classList.remove('jp-OutputPrompt')
+          document.querySelectorAll<HTMLElement>(".jp-NotebookPanel-notebook")[0].style.top='0px';
+          document.getElementsByClassName('jp-OutputPrompt')[0].classList.remove('jp-OutputPrompt');
             
           // make for new cell toolbar
           function removeMouseOver()
