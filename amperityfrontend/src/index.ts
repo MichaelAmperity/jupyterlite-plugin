@@ -330,7 +330,7 @@ async def run_sql(query):
         status = f.read()
         clear_output()
         print(status)
-    if !(status.startswith('Error:')||status.startswith("Pending")):
+    if not (status.startswith('Error:') or status.startswith("Pending")):
         sql_df = pd.read_csv('data.csv')
         os.remove('data.csv')
   clear_output()
