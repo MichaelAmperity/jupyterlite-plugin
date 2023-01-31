@@ -300,7 +300,7 @@ from ipydatagrid import DataGrid
 import ipywidgets
 from IPython.display import Javascript, clear_output
 
-async def run_sql(query):
+async def run_sql(query, sql_df_only=False):
   query = re.sub(r'--(.*?)\\n','\\n',query)
   query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
   try:
@@ -328,15 +328,22 @@ async def run_sql(query):
     await asyncio.sleep(.2)
     with open('status.txt', 'r') as f:
         status = f.read()
-        clear_output()
-        print(status)
+        if not sql_df_only:
+            clear_output()
+            print(status)
     if not (status.startswith('Error:') or status.startswith("Pending")):
         sql_df = pd.read_csv('data.csv')
         os.remove('data.csv')
+        
+  if sql_df_only:
+    if status.startswith('Error:'):
+        return pd.DataFrame()
+    return sql_df
+
   clear_output()
   print(status)
   os.remove('status.txt')
-
+  
   if status.startswith('Completed:'):
     displayout = ipywidgets.VBox([DataGrid(sql_df)])
   elif status.startswith('Error:'):
