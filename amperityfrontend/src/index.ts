@@ -324,7 +324,7 @@ async def run_sql(query, sql_df_only=False, output_js_widget=False):
   '''
   if output_js_widget:
     with output_js_widget:
-      display(Javascript("alert(\"HELLO\")"))
+      display(Javascript(js_command))
   else:
     get_ipython().run_cell_magic("javascript", "", js_command)
   data = ''
