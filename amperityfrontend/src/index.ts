@@ -300,7 +300,7 @@ from ipydatagrid import DataGrid
 import ipywidgets
 from IPython.display import Javascript, clear_output
 
-async def run_sql(query, sql_df_only=False):
+async def run_sql(query, sql_df_only=False, output_js_widget=False):
   query = re.sub(r'--(.*?)\\n','\\n',query)
   query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
   try:
@@ -322,7 +322,11 @@ async def run_sql(query, sql_df_only=False):
     sql_request:\"'''+query+'''\"
   });
   '''
-  get_ipython().run_cell_magic("javascript", "", js_command)
+  if output_js_widget:
+    with output_js_widget:
+      display(Javascript("alert(\"HELLO\")"))
+  else:
+    get_ipython().run_cell_magic("javascript", "", js_command)
   data = ''
   while status.startswith("Pending"):
     await asyncio.sleep(.2)
