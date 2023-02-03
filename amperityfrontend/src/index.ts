@@ -300,9 +300,8 @@ from ipydatagrid import DataGrid
 import ipywidgets
 from IPython.display import Javascript, clear_output
 
-async def run_sql(query, sql_df_only=False, output_js_widget=False):
-  query = re.sub(r'--(.*?)\\n','\\n',query)
-  query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
+
+def _gen_sql_request(query):
   try:
     os.remove('status.txt')
   except:
@@ -313,8 +312,8 @@ async def run_sql(query, sql_df_only=False, output_js_widget=False):
     pass
   with open('status.txt', 'w') as f:
     f.write('Pending')
-  global sql_df
-  status = 'Pending'
+  query = re.sub(r'--(.*?)\\n','\\n',query)
+  query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
   js_command = '''
   window.postMessage(
   {
@@ -322,10 +321,23 @@ async def run_sql(query, sql_df_only=False, output_js_widget=False):
     sql_request:\"'''+query+'''\"
   });
   '''
-  if output_js_widget:
-    with output_js_widget:
-      display(Javascript(js_command))
-  else:
+  return js_command
+
+def request_sql(query, output_widget):
+  with output_widget:
+    js_command = _gen_sql_request(query)
+    display(Javascript(js_command))  
+
+
+async def wait_for_sql():
+  results =  await _run_sql("", True, True)
+  return results
+
+async def _run_sql(query, sql_df_only=False, skip_sql_request=False):
+  global sql_df
+  status = 'Pending'
+  if not skip_sql_request:
+    js_command = gen_sql_request(query)
     get_ipython().run_cell_magic("javascript", "", js_command)
   data = ''
   while status.startswith("Pending"):
@@ -358,7 +370,7 @@ async def run_sql(query, sql_df_only=False, output_js_widget=False):
   return displayout
 
 query = """${code}"""
-await run_sql(query)`
+await _run_sql(query)`
 
                 promise = executeFn(sql_to_run, output, sessionContext, metadata);
               }
