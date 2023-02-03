@@ -337,7 +337,7 @@ async def _run_sql(query, sql_df_only=False, skip_sql_request=False):
   global sql_df
   status = 'Pending'
   if not skip_sql_request:
-    js_command = gen_sql_request(query)
+    js_command = _gen_sql_request(query)
     get_ipython().run_cell_magic("javascript", "", js_command)
   data = ''
   while status.startswith("Pending"):
