@@ -163,12 +163,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
 
       commands.addCommand('set_notebook_width', {
-        label: 'Set notebook width (i.e. 2000px or 100%)',
+        label: 'Set notebook width',
         execute: args => {
           var r = <HTMLElement>document.querySelector(':root');
           var rs = getComputedStyle(r);
           InputDialog.getText({
-            title: 'Width of the output in side-by-side mode',
+            title: 'How wide should the cells be? (i.e. 2000px or 100%)',
             text: rs.getPropertyValue('--jp-notebook-max-width') as string
           })
             .then(result => {
