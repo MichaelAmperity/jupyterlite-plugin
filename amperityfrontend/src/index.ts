@@ -21,7 +21,7 @@ import {
 } from "@jupyterlab/cells";
 import {OutputArea} from '@jupyterlab/outputarea';
 import {JSONObject} from '@lumino/coreutils';
-import { ICommandPalette } from '@jupyterlab/apputils';
+import { ICommandPalette, InputDialog } from '@jupyterlab/apputils';
 import {IDocumentManager} from '@jupyterlab/docmanager';
 
 const plugin: JupyterFrontEndPlugin<void> = {
@@ -162,7 +162,25 @@ const plugin: JupyterFrontEndPlugin<void> = {
       palette.addItem({ command:'cleartag', category:'amperity'});
 
 
-
+      commands.addCommand('set_notebook_width', {
+        label: 'Set notebook width (i.e. 2000px or 100%)',
+        execute: args => {
+          var r = <HTMLElement>document.querySelector(':root');
+          var rs = getComputedStyle(r);
+          InputDialog.getText({
+            title: 'Width of the output in side-by-side mode',
+            text: rs.getPropertyValue('--jp-notebook-max-width') as string
+          })
+            .then(result => {
+              if (result.value) {
+                var r = <HTMLElement>document.querySelector(':root');
+                r?.style.setProperty('--jp-notebook-max-width', result.value);
+              }
+            })
+            .catch(console.error);
+        }
+      });
+      palette.addItem({ command:'set_notebook_width', category:'amperity'});
 
 
       // to hide the file and top bannar
@@ -172,25 +190,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
           retroShell.top.dispose();
           retroShell.menu.setHidden(true);
 
-          // // remove panel and tag toolbar options
-          // function removeToolbarButtons()
-          // {
-          //   let retroshell =  <RetroShell>app.shell;
-          //   if (retroshell['_main'].children()['_source'][0]['_toolbar']['_layout']['_widgets'].length == 17)
-          //   {
-          //     retroshell['_main'].children()['_source'][0]['_toolbar']['_layout']['_widgets'][11].hide();
-          //     retroshell['_main'].children()['_source'][0]['_toolbar']['_layout']['_widgets'][10].hide();
-          //   } 
-          //   else
-          //     window.setTimeout(removeToolbarButtons, 50);
-          // }
-          // removeToolbarButtons();
-
           window.parent.postMessage({notebook_msg_type: "request_notebook"}, '*');
         }
       });
       palette.addItem({ command:'startup_as_notebook', category:'amperity'});
-
 
 
       commands.addCommand('startup_as_published', {
