@@ -365,7 +365,9 @@ async def _run_sql(query, sql_df_only=False, skip_sql_request=False):
   os.remove('status.txt')
   
   if status.startswith('Completed:'):
-    displayout = ipywidgets.VBox([DataGrid(sql_df)])
+    dg = DataGrid(sql_df)
+    dg.auto_fit_columns = True
+    displayout = ipywidgets.VBox([dg])
   elif status.startswith('Error:'):
     out = ipywidgets.Output(layout={'border': '1px solid red'})
     displayout = ipywidgets.VBox([out])
