@@ -1,6 +1,6 @@
 {
   "name": "amperityfrontend",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Frontend extension for Amperity",
   "keywords": [
     "jupyter",

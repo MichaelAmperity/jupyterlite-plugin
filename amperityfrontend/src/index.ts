@@ -294,13 +294,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
               try {
 
                 let sql_to_run =`
-%pip install ipydatagrid
-import asyncio
 import os
 import re
 import pandas as pd
-from ipydatagrid import DataGrid
-import ipywidgets
+import asyncio
 from IPython.display import Javascript, clear_output
 
 
@@ -355,10 +352,14 @@ async def _run_sql(query, sql_df_only=False, skip_sql_request=False):
         os.remove('data.csv')
         
   if sql_df_only:
+    os.remove('status.txt')
     if status.startswith('Error:'):
         return pd.DataFrame()
     return sql_df
 
+  %pip install ipydatagrid
+  from ipydatagrid import DataGrid
+  import ipywidgets
   clear_output()
   print(status)
   os.remove('status.txt')
