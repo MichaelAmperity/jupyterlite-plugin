@@ -1,6 +1,6 @@
 {
   "name": "amperityfrontend",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Frontend extension for Amperity",
   "keywords": [
     "jupyter",
@@ -93,7 +93,7 @@
     "extension": true,
     "outputDir": "amperityfrontend/labextension",
     "_build": {
-      "load": "static/remoteEntry.c1f9d1a4af32532a457c.js",
+      "load": "static/remoteEntry.c509f1f37638f8de564a.js",
       "extension": "./extension",
       "style": "./style"
     }
