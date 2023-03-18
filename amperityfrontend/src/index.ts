@@ -356,7 +356,7 @@ async def _run_sql(query, sql_df_only=False, skip_sql_request=False):
         return pd.DataFrame()
     return sql_df
 
-  %pip install ipydatagrid==1.1.14
+  %pip install ipydatagrid
   from ipydatagrid import DataGrid
   import ipywidgets
   clear_output()
