@@ -324,10 +324,9 @@ def _gen_sql_request(query):
   return js_command
 
 def request_sql(query, output_widget):
-  with output_widget:
-    js_command = _gen_sql_request(query)
-    display(Javascript(js_command))  
-
+  js_command = _gen_sql_request(query)
+  output_widget.outputs = ()
+  out.append_display_data(Javascript(js_command))  
 
 async def wait_for_sql():
   results =  await _run_sql("", True, True)
