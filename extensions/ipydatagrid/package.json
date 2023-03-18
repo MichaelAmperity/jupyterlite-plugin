@@ -1,6 +1,6 @@
 {
   "name": "ipydatagrid",
-  "version": "1.1.15",
+  "version": "1.1.14",
   "description": "Fast Datagrid widget for the Jupyter Notebook and JupyterLab",
   "keywords": [
     "jupyter",
@@ -82,6 +82,7 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-typescript": "^7.6.0",
     "@jupyterlab/builder": "^3.0.1",
+    "@lumino/application": "^1.6.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^10.11.6",
     "@types/webpack-env": "^1.13.6",
@@ -119,46 +120,10 @@
       "@jupyter-widgets/base": {
         "bundled": false,
         "singleton": true
-      },
-      "@lumino/algorithm": {
-        "bundled": false,
-        "singleton": true
-      },
-      "@lumino/commands": {
-        "bundled": false,
-        "singleton": true
-      },
-      "@lumino/coreutils": {
-        "bundled": false,
-        "singleton": true
-      },
-      "@lumino/datagrid": {
-        "bundled": false,
-        "singleton": true
-      },
-      "@lumino/default-theme": {
-        "bundled": false,
-        "singleton": true
-      },
-      "@lumino/domutils": {
-        "bundled": false,
-        "singleton": true
-      },
-      "@lumino/messaging": {
-        "bundled": false,
-        "singleton": true
-      },
-      "@lumino/virtualdom": {
-        "bundled": false,
-        "singleton": true
-      },
-      "@lumino/widgets": {
-        "bundled": false,
-        "singleton": true
       }
     },
     "_build": {
-      "load": "static/remoteEntry.0f3a0d53660b770b0827.js",
+      "load": "static/remoteEntry.a31c87249e5c5b65eda2.js",
       "extension": "./extension"
     }
   }
