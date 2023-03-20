@@ -57,13 +57,13 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.b3c1571ecbb0cebf14f8.js",
+        "load": "static/remoteEntry.dd9f11516b0da683ac39.js",
         "name": "amperitycolors"
       },
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.67b41370efb9a66c0886.js",
+        "load": "static/remoteEntry.86382e0136a74f555c21.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
