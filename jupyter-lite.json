@@ -19,7 +19,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.d6df56cd69f4640706bc.js",
+        "load": "static/remoteEntry.c1170a4f6c4cb6582590.js",
         "name": "@jupyter-widgets/jupyterlab-manager"
       },
       {
@@ -63,7 +63,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.86382e0136a74f555c21.js",
+        "load": "static/remoteEntry.89a477b0289ff737f0d1.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
@@ -118,7 +118,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.0b6a37985538f1f2120b.js",
+        "load": "static/remoteEntry.e989fcff33ba68c37c65.js",
         "name": "jupyter-vuetify"
       },
       {
