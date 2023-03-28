@@ -298,6 +298,7 @@ import os
 import re
 import pandas as pd
 import asyncio
+%pip install -q ipywidgets<8.0.5
 from IPython.display import Javascript, clear_output
 
 
