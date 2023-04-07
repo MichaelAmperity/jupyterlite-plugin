@@ -2,7 +2,7 @@
   "jupyter-config-data": {
     "appName": "JupyterLite",
     "appUrl": "./lab",
-    "appVersion": "0.1.0-beta.21",
+    "appVersion": "0.1.0",
     "baseUrl": "./",
     "collaborative": false,
     "defaultKernelName": "python",
@@ -23,29 +23,9 @@
         "name": "@jupyter-widgets/jupyterlab-manager"
       },
       {
-        "liteExtension": false,
-        "load": "static/remoteEntry.cdf08c015a8192358158.js",
-        "mimeExtension": "./mimeExtension",
-        "name": "@jupyterlab/fasta-extension",
-        "style": "./style"
-      },
-      {
-        "liteExtension": false,
-        "load": "static/remoteEntry.f6be43672b078c208aab.js",
-        "mimeExtension": "./mimeExtension",
-        "name": "@jupyterlab/geojson-extension",
-        "style": "./style"
-      },
-      {
         "extension": "./extension",
         "liteExtension": true,
-        "load": "static/remoteEntry.881c4a7dc32240fa810b.js",
-        "name": "@jupyterlite/javascript-kernel-extension"
-      },
-      {
-        "extension": "./extension",
-        "liteExtension": true,
-        "load": "static/remoteEntry.c825fba8c7254c146abf.js",
+        "load": "static/remoteEntry.9769e16943c1366c4972.js",
         "name": "@jupyterlite/pyodide-kernel-extension"
       },
       {
@@ -63,20 +43,20 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.dd9f11516b0da683ac39.js",
+        "load": "static/remoteEntry.e92c0c4ae4fac2c19e3d.js",
         "name": "amperitycolors"
       },
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.65878a8ec20256fb7fed.js",
+        "load": "static/remoteEntry.9a57a16c2884ab99b22a.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.ede4bc602b2c1bd1a931.js",
+        "load": "static/remoteEntry.4e16238cdb1093cc4e2f.js",
         "name": "bqplot"
       },
       {
@@ -106,12 +86,6 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.a397b41514ddde5db0df.js",
-        "name": "jupyter-leaflet"
-      },
-      {
-        "extension": "./extension",
-        "liteExtension": false,
         "load": "static/remoteEntry.2245c790a510bf1865ea.js",
         "name": "jupyter-matplotlib"
       },
@@ -130,7 +104,13 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.5cbfa1e4260a81a3d54b.js",
+        "load": "static/remoteEntry.6a37df5d4590b29196a3.js",
+        "name": "jupyterlab-night"
+      },
+      {
+        "extension": "./extension",
+        "liteExtension": false,
+        "load": "static/remoteEntry.d87fbfbef62a029ce69b.js",
         "mimeExtension": "./mimeExtension",
         "name": "jupyterlab-plotly"
       },
@@ -422,7 +402,7 @@
     "litePluginSettings": {
       "@jupyterlite/pyodide-kernel-extension:kernel": {
         "pipliteUrls": [
-          "./extensions/@jupyterlite/pyodide-kernel-extension/static/pypi/all.json?sha256=09f59df845511f311e96acddbbcf90a80c518c79609f87a57b075fe86a338dc2"
+          "./extensions/@jupyterlite/pyodide-kernel-extension/static/pypi/all.json?sha256=dada95d1039a199bb4503c6652605f7815ea056b19f3c08a6e78a0c5739f19d4"
         ]
       }
     },

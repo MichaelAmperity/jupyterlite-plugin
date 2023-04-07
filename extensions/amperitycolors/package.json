@@ -90,7 +90,7 @@
     "outputDir": "amperitycolors/labextension",
     "themePath": "style/index.css",
     "_build": {
-      "load": "static/remoteEntry.dd9f11516b0da683ac39.js",
+      "load": "static/remoteEntry.e92c0c4ae4fac2c19e3d.js",
       "extension": "./extension"
     }
   }
