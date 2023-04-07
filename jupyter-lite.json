@@ -25,20 +25,9 @@
       {
         "extension": "./extension",
         "liteExtension": true,
-        "load": "static/remoteEntry.9769e16943c1366c4972.js",
-        "name": "@jupyterlite/pyodide-kernel-extension"
-      },
-      {
-        "extension": "./extension",
-        "liteExtension": false,
-        "load": "static/remoteEntry.8a4c97071917cf84832f.js",
-        "name": "@telamonian/theme-darcula"
-      },
-      {
-        "extension": "./extension",
-        "liteExtension": false,
-        "load": "static/remoteEntry.145e469029155b53b350.js",
-        "name": "@timkpaine/jupyterlab_miami_nights"
+        "load": "static/remoteEntry.763c2633866cdba00ac1.js",
+        "name": "@jupyterlite/xeus-python-kernel",
+        "style": "./style"
       },
       {
         "extension": "./extension",
@@ -68,7 +57,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.a31c87249e5c5b65eda2.js",
+        "load": "static/remoteEntry.a88151f34bf16971a8c4.js",
         "name": "ipydatagrid"
       },
       {
@@ -80,32 +69,26 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.2598bb44edcc46dad172.js",
+        "load": "static/remoteEntry.03390b18ed36b245b514.js",
         "name": "jupyter-cytoscape"
       },
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.2245c790a510bf1865ea.js",
+        "load": "static/remoteEntry.101bc12d4d5cef8f7eb1.js",
         "name": "jupyter-matplotlib"
       },
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.841791f0edbc9fcbe520.js",
+        "load": "static/remoteEntry.8a3514e7c1c3c4a80f2e.js",
         "name": "jupyter-vue"
       },
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.e989fcff33ba68c37c65.js",
+        "load": "static/remoteEntry.0b6a37985538f1f2120b.js",
         "name": "jupyter-vuetify"
-      },
-      {
-        "extension": "./extension",
-        "liteExtension": false,
-        "load": "static/remoteEntry.6a37df5d4590b29196a3.js",
-        "name": "jupyterlab-night"
       },
       {
         "extension": "./extension",
@@ -399,13 +382,6 @@
     "fullMathjaxUrl": "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js",
     "fullStaticUrl": "./build",
     "licensesUrl": "./lab/api/licenses",
-    "litePluginSettings": {
-      "@jupyterlite/pyodide-kernel-extension:kernel": {
-        "pipliteUrls": [
-          "./extensions/@jupyterlite/pyodide-kernel-extension/static/pypi/all.json?sha256=dada95d1039a199bb4503c6652605f7815ea056b19f3c08a6e78a0c5739f19d4"
-        ]
-      }
-    },
     "mathjaxConfig": "TeX-AMS_CHTML-full,Safe",
     "settingsOverrides": {
       "@jlab-enhanced/cell-toolbar:plugin": {
