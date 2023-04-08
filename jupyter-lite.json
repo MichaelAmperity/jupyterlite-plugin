@@ -1,6 +1,10 @@
 {
     "jupyter-config-data": {
         "collaborative": false,
-        "exposeAppInBrowser": true
+        "exposeAppInBrowser": true,
+        "litePluginSettings": {
+            "@jupyterlite/pyodide-kernel-extension:kernel": {
+              "disablePyPIFallback": false
+            }
     }
 }
