@@ -6,5 +6,6 @@
             "@jupyterlite/pyodide-kernel-extension:kernel": {
               "disablePyPIFallback": false
             }
+        }
     }
 }

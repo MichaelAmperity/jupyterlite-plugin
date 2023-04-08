@@ -14,7 +14,7 @@ theme-darcula
 # Python: ipywidget library for Jupyter notebooks 
 ipywidgets==8.0.6
 # Python: ipyevents library for Jupyter notebooks 
-ipyevent==2.0.1
+ipyevents==2.0.1
 # Python: interative Matplotlib library for Jupyter notebooks 
 ipympl>=0.9.3
 # Python: ipycanvas library for Jupyter notebooks 
