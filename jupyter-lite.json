@@ -5,6 +5,7 @@
     "appVersion": "0.1.0",
     "baseUrl": "./",
     "collaborative": false,
+    "contentsStorageName": "seperatestore",
     "defaultKernelName": "python",
     "disabledExtensions": [
       "@jupyterlite/server-extension:service-worker"
