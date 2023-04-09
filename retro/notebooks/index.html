@@ -20,7 +20,6 @@
     </script>
     <script>
       (async function () {
-        await (await navigator.serviceWorker.getRegistrations())[0].unregister()
         const { pathname, origin, search, hash } = window.location;
         if (pathname.match(/(index.html|\/)$/) == null) {
           window.location.href = `${origin}${pathname}/${search}${hash}`;
