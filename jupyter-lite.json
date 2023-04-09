@@ -3,10 +3,11 @@
         "collaborative": false,
         "exposeAppInBrowser": true,
         "disabledExtensions": ["@jupyterlite/server-extension:service-worker"],
+        "contentsStorageName": "seperatestore",
         "litePluginSettings": {
             "@jupyterlite/pyodide-kernel-extension:kernel": {
               "disablePyPIFallback": false
-            }
+            }    
         }
     }
 } 
