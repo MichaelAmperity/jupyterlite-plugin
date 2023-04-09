@@ -5,11 +5,15 @@
     "appVersion": "0.1.0",
     "baseUrl": "./",
     "collaborative": false,
+    "contentsStorageDrivers": [
+      "memoryStorageDriver"
+    ],
     "contentsStorageName": "seperatestore",
     "defaultKernelName": "python",
     "disabledExtensions": [
       "@jupyterlite/server-extension:service-worker"
     ],
+    "enableMemoryStorage": true,
     "exposeAppInBrowser": true,
     "faviconUrl": "./lab/favicon.ico",
     "federated_extensions": [
@@ -497,7 +501,10 @@
           }
         ]
       }
-    }
+    },
+    "settingsStorageDrivers": [
+      "memoryStorageDriver"
+    ]
   },
   "jupyter-lite-schema-version": 0
 }
