@@ -6,6 +6,9 @@
     "baseUrl": "./",
     "collaborative": false,
     "defaultKernelName": "python",
+    "disabledExtensions": [
+      "@jupyterlite/server-extension:service-worker"
+    ],
     "exposeAppInBrowser": true,
     "faviconUrl": "./lab/favicon.ico",
     "federated_extensions": [
