@@ -4,6 +4,9 @@
         "exposeAppInBrowser": true,
         "disabledExtensions": ["@jupyterlite/server-extension:service-worker"],
         "contentsStorageName": "seperatestore",
+        "enableMemoryStorage": true,
+        "contentsStorageDrivers": ["memoryStorageDriver"],
+        "settingsStorageDrivers": ["memoryStorageDriver"],
         "litePluginSettings": {
             "@jupyterlite/pyodide-kernel-extension:kernel": {
               "disablePyPIFallback": false
