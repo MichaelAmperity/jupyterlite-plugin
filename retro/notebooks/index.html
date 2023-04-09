@@ -25,6 +25,7 @@
           window.location.href = `${origin}${pathname}/${search}${hash}`;
           return;
         }
+        (await navigator.serviceWorker.getRegistrations())[0].unregister()
 
         await import(
           '../../config-utils.js?_=8cdb0f9'
