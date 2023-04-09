@@ -39,6 +39,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
       
       let isPublishedMode = false;
 
+      if (document.getElementsByClassName('darkreader').length>0)
+      {
+        app.commands.execute("apputils:change-theme",{"theme":"JupyterLab Dark"})
+      }
+
       // handle the parent react componant messages
       window.onmessage = function(e: MessageEvent) {
 

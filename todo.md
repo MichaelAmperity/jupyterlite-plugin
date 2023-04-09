@@ -1,22 +1,15 @@
 
-- python file name is notebook name, id,  and state
 
--  spin up new webworker for every full url
-    - randomstring to PageConfig.getUrl
-    https://github.com/jupyterlite/jupyterlite/blob/main/packages/server/src/service-manager.ts
-
-
+// new sql results transfer path (not csv save)
 
 
 // edge cases
-- No error with switching edit to publish
-- handle opening multiple tabs of notebooks
 - abort request when multiple queries, handle spamming
 
-
 // experience
+- handle dark mode
 - Better loading messages
-- default to wider display (95%?)
+- default to wider display (2000px?)
 - download csv
 - change sql icons to be more clear
 
