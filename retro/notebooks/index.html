@@ -4,9 +4,6 @@
     <title>JupyterLite Retro - Notebook</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script>
-            await (await navigator.serviceWorker.getRegistrations())[0].unregister()
-    </script>
     <link
       id="jupyter-lite-main"
       rel="preload"
@@ -23,6 +20,7 @@
     </script>
     <script>
       (async function () {
+        await (await navigator.serviceWorker.getRegistrations())[0].unregister()
         const { pathname, origin, search, hash } = window.location;
         if (pathname.match(/(index.html|\/)$/) == null) {
           window.location.href = `${origin}${pathname}/${search}${hash}`;
