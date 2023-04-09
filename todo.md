@@ -1,4 +1,13 @@
 
+- python file name is notebook name, id,  and state
+
+-  spin up new webworker for every full url
+    - randomstring to PageConfig.getUrl
+    https://github.com/jupyterlite/jupyterlite/blob/main/packages/server/src/service-manager.ts
+
+
+
+
 // edge cases
 - No error with switching edit to publish
 - handle opening multiple tabs of notebooks

@@ -2,10 +2,11 @@
     "jupyter-config-data": {
         "collaborative": false,
         "exposeAppInBrowser": true,
+        "disabledExtensions": ["@jupyterlite/server-extension:service-worker"],
         "litePluginSettings": {
             "@jupyterlite/pyodide-kernel-extension:kernel": {
               "disablePyPIFallback": false
             }
         }
     }
-}
+} 
