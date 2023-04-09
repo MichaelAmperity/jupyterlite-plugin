@@ -8,7 +8,6 @@
     "contentsStorageDrivers": [
       "memoryStorageDriver"
     ],
-    "contentsStorageName": "seperatestore",
     "defaultKernelName": "python",
     "disabledExtensions": [
       "@jupyterlite/server-extension:service-worker"
