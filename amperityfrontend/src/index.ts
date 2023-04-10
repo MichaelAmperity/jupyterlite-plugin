@@ -129,6 +129,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
       });
       palette.addItem({ command:'sqltag', category:'amperity'});
 
+      var r = <HTMLElement>document.querySelector(':root');
+      r?.style.setProperty('--jp-notebook-max-width', '2000px');
       commands.addCommand('set_notebook_width', {
         label: 'Set notebook width',
         execute: args => {
@@ -148,7 +150,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
       });
       palette.addItem({ command:'set_notebook_width', category:'amperity'});
-
 
       // to hide the file and top bannar
       commands.addCommand('startup_as_notebook', {
