@@ -121,8 +121,16 @@ const plugin: JupyterFrontEndPlugin<void> = {
               if (nb.content)
               {
                 if (nb.content.activeCell)
-                  nb.content.activeCell.model.metadata.set('tags', ["SQL"])
-              }
+                {
+                  let tags = nb.content.activeCell.model.metadata.get('tags');  
+                  if (tags!="SQL") {
+                      nb.content.activeCell.model.metadata.set('tags', ["SQL"])
+                  }
+                  else
+                  {
+                    nb.content.activeCell.model.metadata.set('tags', [])
+                  }
+                }
             }
           }
         }
