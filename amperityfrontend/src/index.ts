@@ -62,14 +62,18 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
         if (msgType == "sql_error")
         {
-          app.serviceManager.contents.save('status.txt', {'format':"text", "content":"Error: "+e.data.error});
-
+          var sqlstatus = <HTMLTextAreaElement>document.getElementsByClassName('sqlstatus')[0].children[1]
+          sqlstatus.value = "Error: "+e.data.error
+          sqlstatus.dispatchEvent(new Event('change', { 'bubbles': true }));
         }
         if (msgType == "sql_results")
         {
-          app.serviceManager.contents.save('data.csv', {'format': "text", "content":e.data.csv_data}).then(()=>{
-            app.serviceManager.contents.save('status.txt', {'format':"text", "content":e.data.status_text});});
-
+          var sqlstatus = <HTMLTextAreaElement>document.getElementsByClassName('sqlstatus')[0].children[1]
+          var sqldata = <HTMLTextAreaElement>document.getElementsByClassName('sqldata')[0].children[1]
+          sqlstatus.value = e.data.status_text
+          sqldata.value = e.data.csv_data
+          sqldata.dispatchEvent(new Event('change', { 'bubbles': true }));
+          sqlstatus.dispatchEvent(new Event('change', { 'bubbles': true }));
         }
         if (msgType == "load_notebook")
         {          
@@ -106,7 +110,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
 
       commands.addCommand('sqltag', {
-        label: 'Quick Run SQL',
+        label: 'Run SQL',
         execute: () => {
           if (app && app.shell)
           {
@@ -124,48 +128,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
       });
       palette.addItem({ command:'sqltag', category:'amperity'});
-
-      commands.addCommand('sqldltag', {
-        label: 'Run SQL Then Store All Results',
-        execute: () => {
-          if (app && app.shell)
-          {
-            let retroshell =  <RetroShell>app.shell;
-            if (retroshell.currentWidget)
-            {  
-              let nb = <NotebookPanel>retroshell.currentWidget
-              if (nb.content)
-              {
-                if (nb.content.activeCell)
-                  nb.content.activeCell.model.metadata.set('tags', ["SQL_DL"])
-              }
-            }
-          }
-        }
-      });
-      palette.addItem({ command:'sqldltag', category:'amperity'});
-
-
-      commands.addCommand('cleartag', {
-        label: 'Clear Any SQL Tag',
-        execute: () => {
-          if (app && app.shell)
-          {
-            let retroshell =  <RetroShell>app.shell;
-            if (retroshell.currentWidget)
-            {  
-              let nb = <NotebookPanel>retroshell.currentWidget
-              if (nb.content)
-              {
-                if (nb.content.activeCell)
-                  nb.content.activeCell.model.metadata.set('tags', null)
-              }
-            }
-          }
-        }
-      });
-      palette.addItem({ command:'cleartag', category:'amperity'});
-
 
       commands.addCommand('set_notebook_width', {
         label: 'Set notebook width',
@@ -298,7 +260,25 @@ const plugin: JupyterFrontEndPlugin<void> = {
   
               try {
 
+
                 let sql_to_run =`
+
+
+%pip install ipywidgets
+from ipywidgets import widgets
+a = widgets.Textarea(
+    value='Hello World',
+    placeholder='Type something',
+    description='String:',
+    disabled=False,
+)
+a.layout.display='none'
+a.add_class('sqldata')
+a
+sqlstatus
+
+
+a.value
 import os
 import re
 import pandas as pd
@@ -384,35 +364,6 @@ query = """${code}"""
 await _run_sql(query)`
 
                 promise = executeFn(sql_to_run, output, sessionContext, metadata);
-              }
-              catch (e) {
-  
-                throw e;
-              }
-              finally {
-  
-                OutputArea.execute = executeFn;
-              }
-  
-              return promise;
-            }
-          }
-          else if (tags=="SQL_DL") {
-
-            OutputArea.execute = (
-              code: string,
-              output: OutputArea,
-              sessionContext: ISessionContext,
-              metadata?: JSONObject | undefined
-            ): Promise<IExecuteReplyMsg | undefined> => {
-  
-              let promise;
-  
-              try {
-  
-                code = `print('hello sqlfull')\n${code}`;
-  
-                promise = executeFn(code, output, sessionContext, metadata);
               }
               catch (e) {
   

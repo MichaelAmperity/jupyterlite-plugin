@@ -5,11 +5,6 @@
         "disabledExtensions": ["@jupyterlite/server-extension:service-worker"],
         "enableMemoryStorage": true,
         "contentsStorageDrivers": ["memoryStorageDriver"],
-        "settingsStorageDrivers": ["memoryStorageDriver"],
-        "litePluginSettings": {
-            "@jupyterlite/pyodide-kernel-extension:kernel": {
-              "disablePyPIFallback": false
-            }    
-        }
+        "settingsStorageDrivers": ["memoryStorageDriver"]
     }
 } 
