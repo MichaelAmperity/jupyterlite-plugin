@@ -22,16 +22,6 @@
       "cellType": "code"
     },
     {
-      "command": "sqldltag",
-      "icon": "ui-components:download",
-      "cellType": "code"
-    },
-    {
-      "command": "cleartag",
-      "icon": "ui-components:circle-empty",
-      "cellType": "code"
-    },
-    {
       "command": "notebook:delete-cell",
       "icon": "@jlab-enhanced/cell-toolbar:delete"
     }]

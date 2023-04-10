@@ -56,7 +56,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.e7521d6b1f88eec2ced6.js",
+        "load": "static/remoteEntry.e4a7cc73cef5defad9ee.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
@@ -408,7 +408,6 @@
     "licensesUrl": "./lab/api/licenses",
     "litePluginSettings": {
       "@jupyterlite/pyodide-kernel-extension:kernel": {
-        "disablePyPIFallback": false,
         "pipliteUrls": [
           "./extensions/@jupyterlite/pyodide-kernel-extension/static/pypi/all.json?sha256=dada95d1039a199bb4503c6652605f7815ea056b19f3c08a6e78a0c5739f19d4"
         ]
@@ -433,16 +432,6 @@
             "cellType": "code",
             "command": "sqltag",
             "icon": "ui-components:list"
-          },
-          {
-            "cellType": "code",
-            "command": "sqldltag",
-            "icon": "ui-components:download"
-          },
-          {
-            "cellType": "code",
-            "command": "cleartag",
-            "icon": "ui-components:circle-empty"
           },
           {
             "command": "notebook:delete-cell",
