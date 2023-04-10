@@ -24,7 +24,7 @@ ipycanvas==0.13.1
 # Python: plotting libraries
 xyzservices==2023.2.0
 bokeh==3.1.0
-bgplot==0.12.38
+bqplot==0.12.38
 nbformat==5.8.0
 plotly==5.14.1
 ipydatagrid==1.1.14
