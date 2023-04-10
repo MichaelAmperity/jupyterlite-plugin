@@ -131,6 +131,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
                     nb.content.activeCell.model.metadata.set('tags', [])
                   }
                 }
+              }
             }
           }
         }
