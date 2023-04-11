@@ -43,6 +43,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
       if (document.getElementsByClassName('darkreader').length>0)
       {
         app.commands.execute("apputils:change-theme",{"theme":"JupyterLab Dark"})
+        var r = <HTMLElement>document.querySelector(':root');
+        r?.style.setProperty('--jp-editor-selected-focused-background', 'grey');
+        r?.style.setProperty('--jp-editor-cursor-color', 'black');
       }
 
       // handle the parent react componant messages
@@ -259,10 +262,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
       let executeFn = OutputArea.execute;
       NotebookActions.executionScheduled.connect((sender: any, args: { notebook: Notebook, cell: Cell<ICellModel> }) => { 
         let tags = args.cell.model.metadata.get('tags');
-        if (tags) {
-  
-          if (tags=="SQL") {
-  
             OutputArea.execute = (
               code: string,
               output: OutputArea,
@@ -273,9 +272,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
               let promise;
   
               try {
+                let code_to_run = code
 
-
-                let sql_to_run =`
+                if (tags&&tags=="SQL")
+                {
+                  let sql_to_run =`
 
 
 %pip install ipywidgets
@@ -466,14 +467,16 @@ await _run_sql(query)`
 //     await _run_sql(query)
 
 // `
+                code_to_run = sql_to_run
+              }
 
                
                 async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
                 {
                   await new Promise(res => setTimeout(res, 5000));
-                  return executeFn(sql_to_run, output, sessionContext, metadata) 
+                  return executeFn(code, output, sessionContext, metadata) 
                 }
-                promise = executeWait(sql_to_run, output, sessionContext, metadata);
+                promise = executeWait(code_to_run, output, sessionContext, metadata);
               }
               catch (e) {
   
@@ -486,8 +489,6 @@ await _run_sql(query)`
   
               return promise;
             }
-          }
-        }
       });
 
       window.parent.postMessage({notebook_msg_type: "jupyter_is_ready"}, '*');
