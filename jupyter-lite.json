@@ -9,6 +9,9 @@
       "memoryStorageDriver"
     ],
     "defaultKernelName": "python",
+    "disabledExtensions": [
+      "@jupyterlite/server-extension:service-worker"
+    ],
     "enableMemoryStorage": true,
     "exposeAppInBrowser": true,
     "faviconUrl": "./lab/favicon.ico",
@@ -53,7 +56,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.cecd1d44d2b4e61b1169.js",
+        "load": "static/remoteEntry.d14b1eed6691a9f7fe98.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
