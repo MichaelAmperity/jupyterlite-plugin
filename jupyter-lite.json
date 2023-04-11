@@ -2,7 +2,6 @@
     "jupyter-config-data": {
         "collaborative": false,
         "exposeAppInBrowser": true,
-        "disabledExtensions": ["@jupyterlite/server-extension:service-worker"],
         "enableMemoryStorage": true,
         "contentsStorageDrivers": ["memoryStorageDriver"],
         "settingsStorageDrivers": ["memoryStorageDriver"]
