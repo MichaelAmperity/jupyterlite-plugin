@@ -373,95 +373,95 @@ async def _run_sql(query, sql_df_only=False, skip_sql_request=False):
 query = """${code}"""
 await _run_sql(query)`
 
-let a =
-`
+// let a =
+// `
 
-%pip install ipywidgets
-from ipywidgets import widgets
+// %pip install ipywidgets
+// from ipywidgets import widgets
 
-import re
-import pandas as pd
-import asyncio
-from IPython.display import Javascript, clear_output
-from io import StringIO
+// import re
+// import pandas as pd
+// import asyncio
+// from IPython.display import Javascript, clear_output
+// from io import StringIO
 
-def _gen_sql_request(query):
-    query = re.sub(r'--(.*?)\\n','\\n',query)
-    query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
-    js_command = '''
-    window.postMessage(
-    {
-    notebookreact_msg_type: \"sql_request_from_cell\", 
-    sql_request:\"'''+query+'''\"
-    });
-    '''
-    return js_command
+// def _gen_sql_request(query):
+//     query = re.sub(r'--(.*?)\\n','\\n',query)
+//     query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
+//     js_command = '''
+//     window.postMessage(
+//     {
+//     notebookreact_msg_type: \"sql_request_from_cell\", 
+//     sql_request:\"'''+query+'''\"
+//     });
+//     '''
+//     return js_command
 
-def request_sql(query, output_widget):
-    js_command = _gen_sql_request(query)
-    output_widget.outputs = ()
-    output_widget.append_display_data(Javascript(js_command))  
+// def request_sql(query, output_widget):
+//     js_command = _gen_sql_request(query)
+//     output_widget.outputs = ()
+//     output_widget.append_display_data(Javascript(js_command))  
 
-async def wait_for_sql():
-    results =  await _run_sql("", True, True)
-    return results
+// async def wait_for_sql():
+//     results =  await _run_sql("", True, True)
+//     return results
 
-async def _run_sql(query, sql_df_only=False, skip_sql_request=False):
-    global sql_df
-    global out
-    js_command = _gen_sql_request(query)
-    out.outputs = ()
-    out.append_display_data(Javascript(js_command))  
-    sqlstatus = widgets.Textarea(
-        value='Pending',
-        placeholder='Type something',
-        description='String:',
-        disabled=False,
-    )
-    # sqlstatus.layout.display='none'
-    sqlstatus.add_class('sqlstatus')
-    out.append_display_data(sqlstatus)  
+// async def _run_sql(query, sql_df_only=False, skip_sql_request=False):
+//     global sql_df
+//     global out
+//     js_command = _gen_sql_request(query)
+//     out.outputs = ()
+//     out.append_display_data(Javascript(js_command))  
+//     sqlstatus = widgets.Textarea(
+//         value='Pending',
+//         placeholder='Type something',
+//         description='String:',
+//         disabled=False,
+//     )
+//     # sqlstatus.layout.display='none'
+//     sqlstatus.add_class('sqlstatus')
+//     out.append_display_data(sqlstatus)  
     
-    sqldata = widgets.Textarea(
-        value='',
-        placeholder='Type something',
-        description='String:',
-        disabled=False,
-    )
-    # sqldata.layout.display='none'
-    sqldata.add_class('sqldata')
-    out.append_display_data(sqldata)  
+//     sqldata = widgets.Textarea(
+//         value='',
+//         placeholder='Type something',
+//         description='String:',
+//         disabled=False,
+//     )
+//     # sqldata.layout.display='none'
+//     sqldata.add_class('sqldata')
+//     out.append_display_data(sqldata)  
 
-    while sqlstatus.value.startswith("Pending"):
-        await asyncio.sleep(.2)
-        # print(sqlstatus.value)
-        if not (sqlstatus.value.startswith('Error:') or sqlstatus.value.startswith("Pending")):
-            sql_df = pd.read_csv(StringIO(sqldata.value))
+//     while sqlstatus.value.startswith("Pending"):
+//         await asyncio.sleep(.2)
+//         # print(sqlstatus.value)
+//         if not (sqlstatus.value.startswith('Error:') or sqlstatus.value.startswith("Pending")):
+//             sql_df = pd.read_csv(StringIO(sqldata.value))
         
 
-    %pip install ipydatagrid==1.1.14
-    from ipydatagrid import DataGrid
-    import ipywidgets
-    clear_output()
-    print(sqlstatus.value)
-    if sqlstatus.value.startswith('Completed:'):
-        dg = DataGrid(sql_df)
-        dg.auto_fit_columns = True
-        displayout = ipywidgets.VBox([dg])
-    elif status.startswith('Error:'):
-        out = ipywidgets.Output(layout={'border': '1px solid red'})
-        displayout = ipywidgets.VBox([out])
-    else:
-        displayout = sql_df
-    return displayout
+//     %pip install ipydatagrid==1.1.14
+//     from ipydatagrid import DataGrid
+//     import ipywidgets
+//     clear_output()
+//     print(sqlstatus.value)
+//     if sqlstatus.value.startswith('Completed:'):
+//         dg = DataGrid(sql_df)
+//         dg.auto_fit_columns = True
+//         displayout = ipywidgets.VBox([dg])
+//     elif status.startswith('Error:'):
+//         out = ipywidgets.Output(layout={'border': '1px solid red'})
+//         displayout = ipywidgets.VBox([out])
+//     else:
+//         displayout = sql_df
+//     return displayout
 
-query = """select * from Customer360 limit 100"""
-out = widgets.Output()
-display(out) 
-with out:
-    await _run_sql(query)
+// query = """select * from Customer360 limit 100"""
+// out = widgets.Output()
+// display(out) 
+// with out:
+//     await _run_sql(query)
 
-`
+// `
 
                 promise = executeFn(sql_to_run, output, sessionContext, metadata);
               }
