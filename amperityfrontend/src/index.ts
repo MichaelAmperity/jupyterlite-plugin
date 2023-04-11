@@ -2,6 +2,7 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
+import { KernelMessage } from '@jupyterlab/services';
 
 /**
  * Initialization data for the amperityfrontend extension.
@@ -41,7 +42,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
       if (document.getElementsByClassName('darkreader').length>0)
       {
-        app.commands.execute("apputils:change-theme",{"theme":"Darcula"})
+        app.commands.execute("apputils:change-theme",{"theme":"JupyterLab Dark"})
       }
 
       // handle the parent react componant messages
@@ -105,6 +106,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
         else if (msgType == "sql_request_from_cell")
         {
+          //  if this is a blocking call (if in cell only) then stop
+
+
           window.parent.postMessage({notebook_msg_type: "request_sql_query", sql_request: e.data.sql_request}, '*');
         }
       }
@@ -463,7 +467,13 @@ await _run_sql(query)`
 
 // `
 
-                promise = executeFn(sql_to_run, output, sessionContext, metadata);
+               
+                async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
+                {
+                  await new Promise(res => setTimeout(res, 5000));
+                  return executeFn(sql_to_run, output, sessionContext, metadata) 
+                }
+                promise = executeWait(sql_to_run, output, sessionContext, metadata);
               }
               catch (e) {
   
@@ -479,6 +489,7 @@ await _run_sql(query)`
           }
         }
       });
+
       window.parent.postMessage({notebook_msg_type: "jupyter_is_ready"}, '*');
   }
 };
