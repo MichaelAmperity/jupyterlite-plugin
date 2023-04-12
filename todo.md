@@ -5,7 +5,7 @@
 
 // experience
 - rerun with full set option if <500k rows, !download at top of sql to auto do that, download csv path
-- abort request when multiple queries, handle spamming
+- when running add stop option
 - help menu with links to all tools
 - auto replace 'import library' with what is needed for the different tools with pip install and other append to the top
 
