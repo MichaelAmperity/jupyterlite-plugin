@@ -274,7 +274,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
                 if (tags&&tags=="SQL")
                 {
                   let sql_to_run =`
-
 %pip install ipywidgets
 from ipywidgets import widgets
 import re
@@ -283,69 +282,72 @@ import asyncio
 from IPython.display import Javascript, clear_output
 from io import StringIO
 
-operations_out = widgets.Output()
-results_out = widgets.Output()
-
-sqldata_value = ""
-sqlstatus_value = ""
-sqlstatus = widgets.Textarea(
-    value='Pending',
-    placeholder='Type something',
-    description='String:',
-    disabled=False,
-)
-sqlstatus_value = "Pending"
-sqlstatus.layout.display='none'
-sqlstatus.add_class('sqlstatus')
-operations_out.append_display_data(sqlstatus)  
-
-sqldata = widgets.Textarea(
-    value='',
-    placeholder='Type something',
-    description='String:',
-    disabled=False,
-)
-sqldata_value = ""
-sqldata.layout.display='none'
-sqldata.add_class('sqldata')
-operations_out.append_display_data(sqldata)  
-display(operations_out) 
-display(results_out) 
-
-
-def _gen_sql_request(query):
-    query = re.sub(r'--(.*?)\\n','\\n',query)
-    query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
-    js_command = '''
-    window.postMessage(
-    {
-    notebookreact_msg_type: \"sql_request_from_cell\", 
-    sql_request:\"'''+query+'''\"
-    });
-    '''
-    return js_command
-
-def request_sql(query, output_widget):
-    js_command = _gen_sql_request(query)
-    output_widget.append_display_data(Javascript(js_command))  
-
-def on_value_update(el):
+def request_sql(query, shouldBlock=False, shouldShowResults=True, callBackThatGetsStatusAndDF=False):
     global sql_df
-    sqlstatus_value = sqlstatus.value
-    sqldata_value = sqldata.value
-    if not sqlstatus_value.startswith("Pending"):
-        results_out.append_display_data(sqlstatus_value)  
-        if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
-          sql_df = pd.read_csv(StringIO(sqldata_value))
-          results_out.append_display_data(sql_df)
-        operations_out = ()
-        # TODO update call that is done
-sqlstatus.observe(on_value_update, names='value')
+    operations_out = widgets.Output()
+    results_out = widgets.Output()    
+    display(operations_out) 
+    if shouldShowResults:
+        display(results_out) 
+    sqldata_value = ""
+    sqlstatus_value = ""
+    sqlstatus = widgets.Textarea(
+        value='Pending',
+        placeholder='Type something',
+        description='String:',
+        disabled=False,
+    )
+    sqlstatus_value = "Pending"
+    sqlstatus.layout.display='none'
+    sqlstatus.add_class('sqlstatus')
+    operations_out.append_display_data(sqlstatus)  
 
-
-request_sql(query, operations_out)
+    sqldata = widgets.Textarea(
+        value='',
+        placeholder='Type something',
+        description='String:',
+        disabled=False,
+    )
+    sqldata_value = ""
+    sqldata.layout.display='none'
+    sqldata.add_class('sqldata')
+    operations_out.append_display_data(sqldata)  
+    
+    def on_value_update(el):
+        global sql_df
+        sqlstatus_value = sqlstatus.value
+        sqldata_value = sqldata.value
+        if not sqlstatus_value.startswith("Pending"):
+            if shouldShowResults:
+                results_out.append_display_data(sqlstatus_value)
+            if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
+                sql_df = pd.read_csv(StringIO(sqldata_value))
+                if shouldShowResults:
+                    results_out.append_display_data(sql_df)
+            operations_out.clear_output()
+            if callBackThatGetsStatusAndDF:
+                callBackThatGetsStatusAndDF(sqlstatus_value, sql_df)
+            # TODO update call that is done if isblocking
+    sqlstatus.observe(on_value_update, names='value')
+    
+    def _gen_sql_request(query):
+        query = re.sub(r'--(.*?)\\n','\\n',query)
+        query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
+        js_command = '''
+        window.postMessage(
+        {
+        notebookreact_msg_type: \"sql_request_from_cell\", 
+        sql_request:\"'''+query+'''\"
+        });
+        '''
+        return js_command
+    
+    js_command = _gen_sql_request(query)
+    operations_out.append_display_data(Javascript(js_command))  
+    
+                
 query = """${code}"""
-await _run_sql(query)`
+request_sql(query, True)`
 
                   code_to_run = sql_to_run
                   // TODO count the outstanding run 
