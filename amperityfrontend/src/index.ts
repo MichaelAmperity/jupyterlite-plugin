@@ -47,6 +47,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
         r?.style.setProperty('--jp-editor-selected-focused-background', 'grey');
         r?.style.setProperty('--jp-editor-cursor-color', 'black');
       }
+      var r = <HTMLElement>document.querySelector(':root');
+      r?.style.setProperty('--jp-notebook-toolbar-margin-bottom', '0px');
 
       // handle the parent react componant messages
       window.onmessage = function(e: MessageEvent) {
@@ -143,7 +145,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       palette.addItem({ command:'sqltag', category:'amperity'});
 
       var r = <HTMLElement>document.querySelector(':root');
-      r?.style.setProperty('--jp-notebook-max-width', '2000px');
+      r?.style.setProperty('--jp-notebook-max-width', '100%');
       commands.addCommand('set_notebook_width', {
         label: 'Set notebook width',
         execute: args => {
@@ -274,12 +276,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
                 if (tags&&tags=="SQL")
                 {
-                  let import_ipywalker = `
-%pip install -q requests==2.28.2 pygwalker=='0.1.7a5'
-import pandas as pd
-import pygwalker, pygwalker.utils.config as pyg_conf
-pyg_conf.set_config({'privacy': 'offline'})
-`
+//                   let import_ipywalker = `
+// %pip install -q requests==2.28.2 pygwalker=='0.1.7a5'
+// import pandas as pd
+// import pygwalker, pygwalker.utils.config as pyg_conf
+// pyg_conf.set_config({'privacy': 'offline'})
+// `
 
                   let sql_to_run =`
 
