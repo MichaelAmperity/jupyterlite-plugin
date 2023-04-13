@@ -56,7 +56,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.6217f4175d277a781947.js",
+        "load": "static/remoteEntry.cdaf2a30e2c1869f5e6f.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
@@ -75,7 +75,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.a31c87249e5c5b65eda2.js",
+        "load": "static/remoteEntry.0f3a0d53660b770b0827.js",
         "name": "ipydatagrid"
       },
       {

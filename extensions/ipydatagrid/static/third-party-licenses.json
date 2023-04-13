@@ -1,12 +1,6 @@
 {
   "packages": [
     {
-      "name": "@lumino/datagrid",
-      "versionInfo": "0.36.4",
-      "licenseId": "BSD-3-Clause",
-      "extractedText": ""
-    },
-    {
       "name": "@lumino/default-theme",
       "versionInfo": "0.19.0",
       "licenseId": "BSD-3-Clause",
@@ -15,12 +9,6 @@
     {
       "name": "@lumino/dragdrop",
       "versionInfo": "1.14.2",
-      "licenseId": "BSD-3-Clause",
-      "extractedText": ""
-    },
-    {
-      "name": "@lumino/keyboard",
-      "versionInfo": "1.8.2",
       "licenseId": "BSD-3-Clause",
       "extractedText": ""
     },
