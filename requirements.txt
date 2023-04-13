@@ -33,7 +33,7 @@ ipycytoscape==1.3.3
 seaborn==0.12.2
 altair==4.2.2
 ipyvuetify==1.8.4
-pygwalker=='0.1.7a5'
+# pygwalker=='0.1.7a5'
 
 # Lab extensions
 jlab-enhanced-cell-toolbar==3.5.1
