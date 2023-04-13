@@ -243,6 +243,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
                 {
                   delete current_notebook.content.cells[i].outputs; 
                   delete current_notebook.content.cells[i].execution_count;
+                  delete current_notebook.content.cells[i].metadata.jupyter;
                 }
                 let notebook_as_string = JSON.stringify(current_notebook);
                 window.parent.postMessage({notebook_msg_type: "save_notebook", notebook: notebook_as_string}, '*');  

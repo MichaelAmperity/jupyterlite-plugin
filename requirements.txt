@@ -34,6 +34,6 @@ altair==4.2.2
 ipyvuetify==1.8.4
 
 # Lab extensions
-jlab-enhanced-cell-toolbar
+jlab-enhanced-cell-toolbar==3.5.1
 ./amperitycolors
 ./amperityfrontend
