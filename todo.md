@@ -5,6 +5,8 @@
 - help menu with links to all tools
 
 
+- fix issue of sql request getting in a bad state and never completing
+
 - feature flags 
     - 'analysis-notebooks' allows creating and viewing notebooks
     - 'analysis-notebooks-only-published' allows only viewing 'published' notebooks (not creating or editing) 
