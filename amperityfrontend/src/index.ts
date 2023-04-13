@@ -276,12 +276,18 @@ const plugin: JupyterFrontEndPlugin<void> = {
                 {
                   let sql_to_run =`
 %pip install ipywidgets
+%pip install requests pygwalker>='0.1.7a5'
+import pandas as pd
+import pyodide
+import pygwalker as pyg, pygwalker.utils.config as pyg_conf
+pyg_conf.set_config({'privacy': 'offline'})
 from ipywidgets import widgets
 import re
 import pandas as pd
 import asyncio
 from IPython.display import Javascript, clear_output
 from io import StringIO
+
 
 def request_sql(query, shouldBlock=False, shouldShowResults=True, callBackThatGetsStatusAndDF=False):
     global sql_df
@@ -324,7 +330,7 @@ def request_sql(query, shouldBlock=False, shouldShowResults=True, callBackThatGe
             if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
                 sql_df = pd.read_csv(StringIO(sqldata_value))
                 if shouldShowResults:
-                    results_out.append_display_data(sql_df)
+                    results_out.append_display_data(pyg.walk(sql_df,dark='dark'))
             operations_out.clear_output()
             if callBackThatGetsStatusAndDF:
                 callBackThatGetsStatusAndDF(sqlstatus_value, sql_df)
