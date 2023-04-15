@@ -1,6 +1,5 @@
 
 - add queue for sql cells to run
-- get sql code to work in openai demo + with ipydatagrid + 'running' info
 - auto replace 'import library' with what is needed for the different tools with pip install and other append to the top
 - help menu with links to all tools
 

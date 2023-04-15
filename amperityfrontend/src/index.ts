@@ -294,55 +294,65 @@ import asyncio
 from IPython.display import Javascript, clear_output
 from io import StringIO
 
-def request_sql(query, shouldBlock=False, shouldShowResults=True, callBackThatGetsStatusAndDF=False):
-    global sql_df
-    operations_out = widgets.Output()
-    results_out = widgets.Output()    
-    display(operations_out) 
-    if shouldShowResults:
-        display(results_out) 
-    sqldata_value = ""
-    sqlstatus_value = ""
-    sqlstatus = widgets.Textarea(
-        value='Pending',
-        placeholder='Type something',
-        description='String:',
-        disabled=False,
-    )
-    sqlstatus_value = "Pending"
-    sqlstatus.layout.display='none'
-    sqlstatus.add_class('sqlstatus')
-    operations_out.append_display_data(sqlstatus)  
+class RunSQL:
+    def __init__(self, containing_box, optional_callback_with_status_df=False, event_to_set=False, should_show_results=True, should_block=True):
+        self.containing_box = containing_box
+        self.optional_callback_with_status_df = optional_callback_with_status_df
+        self.event_to_set = event_to_set
+        self.should_show_results = should_show_results
+        self.should_block = should_block
+        
+    
+    def _reset(self):
+        if self.event_to_set:
+            self.event_to_set.clear()
+        operations_out = widgets.Output()
+        results_out = widgets.Output()  
+        self.containing_box.children = [operations_out, results_out]
+        sqlstatus = widgets.Textarea(
+            value='Pending',
+            placeholder='Type something',
+            description='String:',
+            disabled=False,
+        )
+        sqlstatus.layout.display='none'
+        sqlstatus.add_class('sqlstatus')
+        operations_out.append_display_data(sqlstatus)  
 
-    sqldata = widgets.Textarea(
-        value='',
-        placeholder='Type something',
-        description='String:',
-        disabled=False,
-    )
-    sqldata_value = ""
-    sqldata.layout.display='none'
-    sqldata.add_class('sqldata')
-    operations_out.append_display_data(sqldata)  
-    
-    def on_value_update(el):
-        global sql_df
-        sqlstatus_value = sqlstatus.value
-        sqldata_value = sqldata.value
-        if not sqlstatus_value.startswith("Pending"):
-            if shouldShowResults:
-                results_out.append_display_data(sqlstatus_value)
-            if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
-                sql_df = pd.read_csv(StringIO(sqldata_value))
-                if shouldShowResults:
-                    results_out.append_display_data(ipywidgets.VBox([DataGrid(sql_df)]))
-            operations_out.clear_output()
-            if callBackThatGetsStatusAndDF:
-                callBackThatGetsStatusAndDF(sqlstatus_value, sql_df)
-            # TODO update call that is done if isblocking
-    sqlstatus.observe(on_value_update, names='value')
-    
-    def _gen_sql_request(query):
+        sqldata = widgets.Textarea(
+            value='',
+            placeholder='Type something',
+            description='String:',
+            disabled=False,
+        )
+        sqldata.layout.display='none'
+        sqldata.add_class('sqldata')
+        operations_out.append_display_data(sqldata)
+
+
+        def on_value_update(el):
+            sqlstatus_value = sqlstatus.value
+            sqldata_value = sqldata.value
+            df = ''
+            if not sqlstatus_value.startswith("Pending"):
+                if self.should_show_results:
+                    results_out.outputs = ()
+                    results_out.append_stdout(sqlstatus_value)
+                if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
+                    df = pd.read_csv(StringIO(sqldata_value))
+                    if self.should_show_results:
+                        results_out.append_display_data(widgets.VBox([DataGrid(df, auto_fit_columns=True)]))
+                operations_out.outputs = ()
+                if self.optional_callback_with_status_df:
+                    self.optional_callback_with_status_df(sqlstatus_value, df)
+                if self.event_to_set:
+                    self.event_to_set.set()
+                # TODO update call that is done if isblocking
+        sqlstatus.observe(on_value_update, names='value')
+        
+
+    def run_query(self, query):
+        self._reset()
         query = re.sub(r'--(.*?)\\n','\\n',query)
         query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
         js_command = '''
@@ -352,14 +362,16 @@ def request_sql(query, shouldBlock=False, shouldShowResults=True, callBackThatGe
         sql_request:\"'''+query+'''\"
         });
         '''
-        return js_command
+        self.containing_box.children[0].append_display_data(Javascript(js_command))  
+        
     
-    js_command = _gen_sql_request(query)
-    operations_out.append_display_data(Javascript(js_command))  
-    
-                
-query = """${code}"""
-request_sql(query, True)`
+output_for_sql = widgets.VBox()
+def callback_for_sql(status, dfin):
+     global df
+     df = dfin
+display(output_for_sql)
+sql_r = RunSQL(output_for_sql, callback_for_sql)
+sql_r.run_query("""${code}""")`
 
                   code_to_run = sql_to_run
                   // TODO count the outstanding run 
