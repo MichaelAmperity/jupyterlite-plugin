@@ -276,13 +276,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
                 if (tags&&tags=="SQL")
                 {
-//                   let import_ipywalker = `
-// %pip install -q requests==2.28.2 pygwalker=='0.1.7a5'
-// import pandas as pd
-// import pygwalker, pygwalker.utils.config as pyg_conf
-// pyg_conf.set_config({'privacy': 'offline'})
-// `
-
                   let sql_to_run =`
 
 %pip install -q ipywidgets==8.0.6 ipydatagrid==1.1.15
@@ -328,7 +321,8 @@ class RunSQL:
         sqldata.layout.display='none'
         sqldata.add_class('sqldata')
         operations_out.append_display_data(sqldata)
-
+        if self.should_show_results:
+          results_out.append_stdout("Pending...")
 
         def on_value_update(el):
             sqlstatus_value = sqlstatus.value
@@ -376,11 +370,27 @@ sql_r.run_query("""${code}""")`
                   code_to_run = sql_to_run
                   // TODO count the outstanding run 
                 }
+                else //normal code cell
+                {
+                  let import_ipywalker = `
+%pip install -q requests==2.28.2 pygwalker=='0.1.7a5'
+import pandas as pd
+import pygwalker as pyg, pygwalker.utils.config as pyg_conf
+pyg_conf.set_config({'privacy': 'offline'})
+`
+                  if (code.includes('import pygwalker'))
+                    code_to_run = import_ipywalker + code_to_run
+
+                }
                
                 async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
                 {
+                  // await till it is turn in queue
+                  // await sql_open flag
+                  // if is a sql one then switch the sql_open flag
+                  // move queue++
                   await new Promise(res => setTimeout(res, 10));
-                  return executeFn(code, output, sessionContext, metadata) 
+                  return executeFn(code, output, sessionContext, metadata) // has callback to switch sql_open
                 }
                 promise = executeWait(code_to_run, output, sessionContext, metadata);
               }

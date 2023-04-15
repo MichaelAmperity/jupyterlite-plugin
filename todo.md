@@ -17,7 +17,7 @@
 - stand up jupyter site like docsite 
     - setup repo to be a jupyterlite pages on amperity
     - talk to joshp about how to get that exposed as an s3 bucket publicly (only accessible being iframed in app?)
--squash commits and pull request
+- squash commits and pull request
 
 
 
