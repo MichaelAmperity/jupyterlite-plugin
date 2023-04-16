@@ -39,7 +39,36 @@ const plugin: JupyterFrontEndPlugin<void> = {
       const { shell, commands } = app; 
       
       let isPublishedMode = false;
-      let shouldWaitSql = false;
+
+      class SQLRunQueue {
+        private items: [number, boolean][] = [];
+        private counter: number=0;
+        public activeWaiting: boolean = false;
+      
+        public pushID(IsSQLWait: boolean): number {
+          let id = this.counter
+          this.counter++
+          this.items.push([id, IsSQLWait]);
+          console.log('push'+String(id))
+          return id
+        }
+      
+        public popID(id: number): void {
+          if (this.items[0][0] === id) {
+            this.activeWaiting = this.items[0][1];
+            this.items.shift();
+            console.log('pop'+String(id))
+          }
+        }
+      
+        public async wait(id: number): Promise<void> {
+          while ((this.items[0][0] !== id)||(this.activeWaiting === true)) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+          }
+        }
+      }
+      
+      const sqlQueue = new SQLRunQueue();
 
 
       if (document.getElementsByClassName('darkreader').length>0)
@@ -117,7 +146,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
         if (msgType == "sql_finish_from_cell")
         {
-          shouldWaitSql = false
+          sqlQueue.activeWaiting = false
         }
       }
 
@@ -264,45 +293,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
       registerDocListener();
 
-      type TaskFunction = () => Promise<void>;
-
-      class TaskQueue {
-        private queue: { id: number; task: TaskFunction }[] = [];
-        private currentTaskId = 0;
-      
-        public async addTask(task: TaskFunction): Promise<void> {
-          const taskId = ++this.currentTaskId;
-          const promise = new Promise<void>((resolve) => {
-            this.queue.push({ id: taskId, task });
-            if (this.queue.length === 1) {
-              this.runNextTask(resolve);
-            }
-          });
-          return promise;
-        }
-      
-        private async runNextTask(resolve: () => void): Promise<void> {
-          const nextTask = this.queue[0];
-          try {
-            await nextTask.task();
-          } finally {
-            this.queue.shift();
-            if (this.queue.length > 0) {
-              this.runNextTask(resolve);
-            } else {
-              resolve();
-            }
-          }
-        }
-      }
-
-      async function waitUntilSql() {
-        while (!shouldWaitSql) {
-          await new Promise(resolve => setTimeout(resolve, 500));
-        }
-      }
-
-      const taskQueue = new TaskQueue();
       let executeFn = OutputArea.execute;
       NotebookActions.executionScheduled.connect((sender: any, args: { notebook: Notebook, cell: Cell<ICellModel> }) => { 
         let tags = args.cell.model.metadata.get('tags');
@@ -421,7 +411,6 @@ sql_r = RunSQL(output_for_sql, callback_for_sql)
 sql_r.run_query("""${code}""")`
 
                   code_to_run = sql_to_run
-                  // TODO count the outstanding run 
                 }
                 else //normal code cell
                 {
@@ -438,12 +427,9 @@ pyg_conf.set_config({'privacy': 'offline'})
                
                 async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
                 {
-                  const task1 = async () => {
-                    await new Promise(resolve => setTimeout(resolve, 500));//await waitUntilSql
-                  };
-                  await taskQueue.addTask(task1);
-                  if (isSQLCell)
-                    shouldWaitSql = true
+                  let t = sqlQueue.pushID(isSQLCell)
+                  await sqlQueue.wait(t)
+                  sqlQueue.popID(t)
                   return executeFn(code, output, sessionContext, metadata) // has callback to switch sql_open
                 }
                 promise = executeWait(code_to_run, output, sessionContext, metadata);
