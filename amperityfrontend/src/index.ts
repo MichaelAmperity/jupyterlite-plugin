@@ -324,7 +324,7 @@ from IPython.display import Javascript, clear_output
 from io import StringIO
 
 class RunSQL:
-    def __init__(self, containing_box, optional_callback_with_status_df=False, event_to_set=False, should_show_results=True, needs_to_unblock=True):
+    def __init__(self, containing_box, optional_callback_with_status_df=False, event_to_set=False, should_show_results=False, needs_to_unblock=False):
         self.containing_box = containing_box
         self.optional_callback_with_status_df = optional_callback_with_status_df
         self.event_to_set = event_to_set
@@ -407,7 +407,7 @@ def callback_for_sql(status, dfin):
      global df
      df = dfin
 display(output_for_sql)
-sql_r = RunSQL(output_for_sql, callback_for_sql)
+sql_r = RunSQL(output_for_sql, callback_for_sql, event_to_set=False, should_show_results=True, needs_to_unblock=True)
 sql_r.run_query("""${code}""")`
 
                   code_to_run = sql_to_run
@@ -420,8 +420,19 @@ import pandas as pd
 import pygwalker as pyg, pygwalker.utils.config as pyg_conf
 pyg_conf.set_config({'privacy': 'offline'})
 `
-                  if (code.includes('import pyg'))
+                  if (code.includes('pyg.walk'))
                     code_to_run = import_ipywalker + code_to_run
+
+                  let import_bokeh = `
+
+%pip install xyzservices==2023.2.0 bokeh==3.1.0
+from bokeh.plotting import output_notebook
+import pandas
+import numpy as np
+output_notebook()
+`
+                  if (code.includes('import bokeh'))
+                    code_to_run = import_bokeh + code_to_run
 
                 }
                
