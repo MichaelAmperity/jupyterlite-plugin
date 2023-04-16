@@ -431,7 +431,7 @@ import pandas as pd
 import pygwalker as pyg, pygwalker.utils.config as pyg_conf
 pyg_conf.set_config({'privacy': 'offline'})
 `
-                  if (code.includes('import pygwalker'))
+                  if (code.includes('import pyg'))
                     code_to_run = import_ipywalker + code_to_run
 
                 }
@@ -439,7 +439,7 @@ pyg_conf.set_config({'privacy': 'offline'})
                 async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
                 {
                   const task1 = async () => {
-                    await waitUntilSql
+                    await new Promise(resolve => setTimeout(resolve, 500));//await waitUntilSql
                   };
                   await taskQueue.addTask(task1);
                   if (isSQLCell)
