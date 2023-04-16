@@ -371,7 +371,7 @@ class RunSQL:
                 if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
                     df = pd.read_csv(StringIO(sqldata_value))
                     if self.should_show_results:
-                        results_out.append_display_data(widgets.VBox([DataGrid(df, auto_fit_columns=True)]))
+                        results_out.append_display_data(widgets.VBox([DataGrid(df,  layout={ 'height' : '300px' }, auto_fit_columns=True)]))
                 operations_out.outputs = ()
                 if self.optional_callback_with_status_df:
                     self.optional_callback_with_status_df(sqlstatus_value, df)

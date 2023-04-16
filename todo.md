@@ -39,7 +39,7 @@ normal
 download
 df
 DataGrid
-
+DataGrid(df, layout={ 'height' : '300px' }, auto_fit_columns = True) 
 
 -- tablous style graph builder --
 import pyg
