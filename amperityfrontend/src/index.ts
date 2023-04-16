@@ -39,6 +39,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
       const { shell, commands } = app; 
       
       let isPublishedMode = false;
+      let shouldWaitSql = false;
+
 
       if (document.getElementsByClassName('darkreader').length>0)
       {
@@ -109,9 +111,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
             }
           });
         }
-        else if (msgType == "sql_request_from_cell")
+        if (msgType == "sql_request_from_cell")
         {
           window.parent.postMessage({notebook_msg_type: "request_sql_query", sql_request: e.data.sql_request}, '*');
+        }
+        if (msgType == "sql_finish_from_cell")
+        {
+          shouldWaitSql = false
         }
       }
 
@@ -258,7 +264,45 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
       registerDocListener();
 
+      type TaskFunction = () => Promise<void>;
 
+      class TaskQueue {
+        private queue: { id: number; task: TaskFunction }[] = [];
+        private currentTaskId = 0;
+      
+        public async addTask(task: TaskFunction): Promise<void> {
+          const taskId = ++this.currentTaskId;
+          const promise = new Promise<void>((resolve) => {
+            this.queue.push({ id: taskId, task });
+            if (this.queue.length === 1) {
+              this.runNextTask(resolve);
+            }
+          });
+          return promise;
+        }
+      
+        private async runNextTask(resolve: () => void): Promise<void> {
+          const nextTask = this.queue[0];
+          try {
+            await nextTask.task();
+          } finally {
+            this.queue.shift();
+            if (this.queue.length > 0) {
+              this.runNextTask(resolve);
+            } else {
+              resolve();
+            }
+          }
+        }
+      }
+
+      async function waitUntilSql() {
+        while (!shouldWaitSql) {
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+      }
+
+      const taskQueue = new TaskQueue();
       let executeFn = OutputArea.execute;
       NotebookActions.executionScheduled.connect((sender: any, args: { notebook: Notebook, cell: Cell<ICellModel> }) => { 
         let tags = args.cell.model.metadata.get('tags');
@@ -270,12 +314,14 @@ const plugin: JupyterFrontEndPlugin<void> = {
             ): Promise<IExecuteReplyMsg | undefined> => {
   
               let promise;
+              let isSQLCell = false
   
               try {
                 let code_to_run = code
 
                 if (tags&&tags=="SQL")
                 {
+                  isSQLCell = true
                   let sql_to_run =`
 
 %pip install -q ipywidgets==8.0.6 ipydatagrid==1.1.15
@@ -288,12 +334,12 @@ from IPython.display import Javascript, clear_output
 from io import StringIO
 
 class RunSQL:
-    def __init__(self, containing_box, optional_callback_with_status_df=False, event_to_set=False, should_show_results=True, should_block=True):
+    def __init__(self, containing_box, optional_callback_with_status_df=False, event_to_set=False, should_show_results=True, needs_to_unblock=True):
         self.containing_box = containing_box
         self.optional_callback_with_status_df = optional_callback_with_status_df
         self.event_to_set = event_to_set
         self.should_show_results = should_show_results
-        self.should_block = should_block
+        self.needs_to_unblock = needs_to_unblock
         
     
     def _reset(self):
@@ -341,7 +387,14 @@ class RunSQL:
                     self.optional_callback_with_status_df(sqlstatus_value, df)
                 if self.event_to_set:
                     self.event_to_set.set()
-                # TODO update call that is done if isblocking
+                if self.needs_to_unblock:
+                  js_command = '''
+                  window.postMessage(
+                  {
+                  notebookreact_msg_type: \"sql_finish_from_cell\", 
+                  });
+                  '''
+                  self.containing_box.children[0].append_display_data(Javascript(js_command))  
         sqlstatus.observe(on_value_update, names='value')
         
 
@@ -385,11 +438,12 @@ pyg_conf.set_config({'privacy': 'offline'})
                
                 async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
                 {
-                  // await till it is turn in queue
-                  // await sql_open flag
-                  // if is a sql one then switch the sql_open flag
-                  // move queue++
-                  await new Promise(res => setTimeout(res, 10));
+                  const task1 = async () => {
+                    await waitUntilSql
+                  };
+                  await taskQueue.addTask(task1);
+                  if (isSQLCell)
+                    shouldWaitSql = true
                   return executeFn(code, output, sessionContext, metadata) // has callback to switch sql_open
                 }
                 promise = executeWait(code_to_run, output, sessionContext, metadata);
