@@ -120,10 +120,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
             if (context)
               context.revert().then(()=> 
               {  
-                // fixes syntax knowledge that is lost when reloading doc, without popup warning... 
-                // maybe this line doesn't work, hard to test. restarting kernel always works but that is heavy
-                app.serviceManager.kernelspecs.refreshSpecs();
-                
                 if (isPublishedMode)
                   window.setTimeout(afterLoadPublished, 500);
                 else
@@ -142,7 +138,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
         if (msgType == "sql_request_from_cell")
         {
-          window.parent.postMessage({notebook_msg_type: "request_sql_query", sql_request: e.data.sql_request}, '*');
+          window.parent.postMessage({notebook_msg_type: "request_sql_query", sql_request: e.data.sql_request, download: e.data.download}, '*');
         }
         if (msgType == "sql_finish_from_cell")
         {
@@ -371,7 +367,10 @@ class RunSQL:
                 if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
                     df = pd.read_csv(StringIO(sqldata_value))
                     if self.should_show_results:
-                        results_out.append_display_data(widgets.VBox([DataGrid(df,  layout={ 'height' : '300px' }, auto_fit_columns=True)]))
+                        if df.size <= 5000:
+                          results_out.append_display_data(widgets.VBox([DataGrid(df,  layout={ 'height' : '300px' }, auto_fit_columns=True)]))
+                        else:
+                          results_out.append_display_data(widgets.VBox([DataGrid(df[:5000],  layout={ 'height' : '300px' }, auto_fit_columns=True)]))
                 operations_out.outputs = ()
                 if self.optional_callback_with_status_df:
                     self.optional_callback_with_status_df(sqlstatus_value, df)
@@ -392,11 +391,15 @@ class RunSQL:
         self._reset()
         query = re.sub(r'--(.*?)\\n','\\n',query)
         query = query.replace('\\n', ' /* newline */ ').replace('\\\\', '\\\\\\\\')
+        isDownload = query.lstrip().startswith('!all')
+        if isDownload:
+            query = query.replace('!all', '',1)
         js_command = '''
         window.postMessage(
         {
         notebookreact_msg_type: \"sql_request_from_cell\", 
-        sql_request:\"'''+query+'''\"
+        sql_request:\"'''+query+'''\",
+        download:\"'''+isDownload+'''\"
         });
         '''
         self.containing_box.children[0].append_display_data(Javascript(js_command))  
