@@ -50,7 +50,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
           let id = this.counter
           this.counter++
           this.items.push([id, IsSQLWait]);
-          console.log('push'+String(id))
           return id
         }
       
@@ -58,7 +57,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
           if (this.items[0][0] === id) {
             this.activeWaiting = this.items[0][1];
             this.items.shift();
-            console.log('pop'+String(id))
           }
         }
       
@@ -290,11 +288,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
       registerDocListener();
 
-      // kconnection.statusChanged.connect((kernel: KernelConnection, kernalstatus: KernelMessage.Status) =>
-      // {
-      //   if ((kernalstatus === 'starting')||(kernalstatus === 'restarting')||(kernalstatus === 'autorestarting'))
-      //       sqlQueue = new SQLRunQueue();
-      // });
+      commands.commandExecuted.connect((sender:any, args:{id: string | undefined}) => { 
+        if ((args.id === 'kernelmenu:restart') ||  (args.id === 'runmenu:restart-and-run-all'))
+            sqlQueue = new SQLRunQueue();
+      });
 
 
       let executeFn = OutputArea.execute;
