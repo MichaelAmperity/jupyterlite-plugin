@@ -2,7 +2,7 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
-import {Kernel, KernelMessage, Session } from '@jupyterlab/services';
+import {Kernel, KernelMessage, KernelConnection } from '@jupyterlab/services';
 
 /**
  * Initialization data for the amperityfrontend extension.
@@ -34,7 +34,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
     retroShell: IRetroShell,
     palette: ICommandPalette,
     docManager: IDocumentManager,
-    panel: NotebookPanel
+    panel: NotebookPanel,
+    kconnection: KernelConnection
   ) => {
       const { shell, commands } = app; 
       
@@ -289,14 +290,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
       registerDocListener();
 
-      const statusChanged = (
-        _: Session.ISessionConnection,
-        status: Kernel.Status
-      ): void => {
-        if (status.endsWith('restarting')) {
+      kconnection.statusChanged.connect((kernel: KernelConnection, kernalstatus: KernelMessage.Status) =>
+      {
+        if ((kernalstatus === 'starting')||(kernalstatus === 'restarting')||(kernalstatus === 'autorestarting'))
             sqlQueue = new SQLRunQueue();
-        }
-      };
+      });
 
 
       let executeFn = OutputArea.execute;
