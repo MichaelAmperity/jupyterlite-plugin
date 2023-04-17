@@ -1,7 +1,8 @@
 
 - csv path: rerun with full set option if <500k rows, !all at top of sql to auto do that
 - when running with display_results, add stop button
-- fix issue of toggle edit publish a few times to get in a bad sql state
+
+
 
 - auto replace 'import library' with what is needed for the different tools with pip install and other append to the top
 - help menu with links to all tools

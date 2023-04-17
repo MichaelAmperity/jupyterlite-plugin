@@ -120,7 +120,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
               context.revert().then(()=> 
               {  
                 if (isPublishedMode)
-                  afterLoadPublished();
+                  window.setTimeout(afterLoadPublished, 500);
                 else
                   window.parent.postMessage({notebook_msg_type: "finished_load"}, '*');
 
