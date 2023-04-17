@@ -1,4 +1,5 @@
 
+
 // next set
 - csv path: rerun with full set option if <500k rows, !all at top of sql to auto do that
 - when running with display_results, add stop button
@@ -6,7 +7,7 @@
 
 - auto replace 'import library' with what is needed for the different tools with pip install and other append to the top
 - help menu with links to all tools
-- fix issue of sql request getting in a bad state and never completing
+- fix issue of sql request getting in a bad state and never completing, listener to reset kernel that clears key variables and fixes state
 
 
 - feature flags 

@@ -399,7 +399,7 @@ class RunSQL:
         {
         notebookreact_msg_type: \"sql_request_from_cell\", 
         sql_request:\"'''+query+'''\",
-        download:\"'''+isDownload+'''\"
+        download:\"'''+str(isDownload)+'''\"
         });
         '''
         self.containing_box.children[0].append_display_data(Javascript(js_command))  
