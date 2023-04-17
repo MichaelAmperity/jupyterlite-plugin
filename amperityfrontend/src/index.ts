@@ -2,7 +2,7 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
-import { KernelMessage } from '@jupyterlab/services';
+import {Kernel, KernelMessage, Session } from '@jupyterlab/services';
 
 /**
  * Initialization data for the amperityfrontend extension.
@@ -68,7 +68,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         }
       }
       
-      const sqlQueue = new SQLRunQueue();
+      let sqlQueue = new SQLRunQueue();
 
 
       if (document.getElementsByClassName('darkreader').length>0)
@@ -288,6 +288,16 @@ const plugin: JupyterFrontEndPlugin<void> = {
             window.setTimeout(registerDocListener, 200);
       }
       registerDocListener();
+
+      const statusChanged = (
+        _: Session.ISessionConnection,
+        status: Kernel.Status
+      ): void => {
+        if (status.endsWith('restarting')) {
+            sqlQueue = new SQLRunQueue();
+        }
+      };
+
 
       let executeFn = OutputArea.execute;
       NotebookActions.executionScheduled.connect((sender: any, args: { notebook: Notebook, cell: Cell<ICellModel> }) => { 
