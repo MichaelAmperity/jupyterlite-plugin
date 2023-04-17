@@ -290,11 +290,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
       registerDocListener();
 
-      kconnection.statusChanged.connect((kernel: KernelConnection, kernalstatus: KernelMessage.Status) =>
-      {
-        if ((kernalstatus === 'starting')||(kernalstatus === 'restarting')||(kernalstatus === 'autorestarting'))
-            sqlQueue = new SQLRunQueue();
-      });
+      // kconnection.statusChanged.connect((kernel: KernelConnection, kernalstatus: KernelMessage.Status) =>
+      // {
+      //   if ((kernalstatus === 'starting')||(kernalstatus === 'restarting')||(kernalstatus === 'autorestarting'))
+      //       sqlQueue = new SQLRunQueue();
+      // });
 
 
       let executeFn = OutputArea.execute;
