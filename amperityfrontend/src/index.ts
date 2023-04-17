@@ -2,7 +2,7 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
-import {Kernel, KernelMessage, KernelConnection } from '@jupyterlab/services';
+import {KernelMessage, KernelConnection } from '@jupyterlab/services';
 
 /**
  * Initialization data for the amperityfrontend extension.
