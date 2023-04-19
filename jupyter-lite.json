@@ -56,7 +56,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.ed6dcc5b8b00094428e0.js",
+        "load": "static/remoteEntry.a3653d4e1aeab3589fc7.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
