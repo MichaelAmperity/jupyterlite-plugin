@@ -371,6 +371,9 @@ class RunSQL:
                     results_out.append_stdout(sqlstatus_value)
                 if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
                     df = pd.read_json(StringIO(sqldata_value))
+                    headers = df.iloc[0].values
+                    df.columns = headers
+                    df.drop(index=0, axis=0, inplace=True)
                     if self.should_show_results:
                         if df.size <= 5000:
                           results_out.append_display_data(widgets.VBox([DataGrid(df,  layout={ 'height' : '300px' }, auto_fit_columns=True)]))
