@@ -1,7 +1,9 @@
 
-- csv path: rerun with full set option if <500k rows, !all at top of sql to auto do that
-- when running with display_results, add stop button
-
+- 1000 default, max of 100,000 with !all
+    - first row built then added to rest of rows
+    - read_json(StringIO)
+    - message added of 5k displayed, use !all to get up to 100k
+- animation of running icon
 
 - auto replace 'import library' with what is needed for the different tools with pip install and other append to the top
 - help menu with links to all tools
@@ -23,6 +25,7 @@
 
 
 // final set
+- stop button when running + when press reset kernel send cancel signal?
 - in SQL cell: color coding + load in autocomplete tables and columns + remove python autocomplete
 - amp_id links to cluster browser in ipydatagrid
 
