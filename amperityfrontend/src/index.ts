@@ -322,7 +322,6 @@ import re
 import pandas as pd
 import asyncio
 from IPython.display import Javascript, clear_output
-from io import StringIO
 
 class RunSQL:
     def __init__(self, containing_box, optional_callback_with_status_df=False, event_to_set=False, should_show_results=False, needs_to_unblock=False):
@@ -370,7 +369,7 @@ class RunSQL:
                     results_out.outputs = ()
                     results_out.append_stdout(sqlstatus_value)
                 if not (sqlstatus_value.startswith('Error:') or sqlstatus_value.startswith("Pending")):
-                    df = pd.read_csv(StringIO(sqldata_value))
+                    df = pd.read_json(sqldata_value)
                     if self.should_show_results:
                         if df.size <= 5000:
                           results_out.append_display_data(widgets.VBox([DataGrid(df,  layout={ 'height' : '300px' }, auto_fit_columns=True)]))

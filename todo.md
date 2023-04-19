@@ -3,7 +3,6 @@
 - when running with display_results, add stop button
 
 
-
 - auto replace 'import library' with what is needed for the different tools with pip install and other append to the top
 - help menu with links to all tools
 
@@ -20,8 +19,6 @@
     - setup repo to be a jupyterlite pages on amperity
     - talk to joshp about how to get that exposed as an s3 bucket publicly (only accessible being iframed in app?)
 - squash commits and pull request
-
-
 
 
 
