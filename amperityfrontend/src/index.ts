@@ -309,12 +309,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   
               try {
                 let code_to_run = code
-
-                if (tags&&tags=="SQL")
-                {
-                  isSQLCell = true
-                  let sql_to_run =`
-
+                let sql_lib = `
 %pip install -q ipywidgets==8.0.6 ipydatagrid==1.1.15
 import ipywidgets as widgets
 from ipydatagrid import DataGrid
@@ -411,7 +406,12 @@ class RunSQL:
         });
         '''
         self.containing_box.children[0].append_display_data(Javascript(js_command))  
-        
+ `
+
+                if (tags&&tags=="SQL")
+                {
+                  isSQLCell = true
+                  let sql_to_run =`
 output_for_sql = widgets.VBox()
 def callback_for_sql(status, dfin):
      global df
@@ -420,7 +420,7 @@ display(output_for_sql)
 sql_r = RunSQL(output_for_sql, callback_for_sql, event_to_set=False, should_show_results=True, needs_to_unblock=True)
 sql_r.run_query("""${code}""")`
 
-                  code_to_run = sql_to_run
+                  code_to_run =  sql_lib + sql_to_run
                 }
                 else //normal code cell
                 {
@@ -499,7 +499,9 @@ import pandas as pd
 `
                   if (code.includes('import ipycytoscape'))
                     code_to_run = import_ipycytoscape + code_to_run                       
-                    
+                  
+                  if (code.includes('RunSQL('))
+                    code_to_run = sql_lib + code_to_run
                 }
                 async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
                 {
