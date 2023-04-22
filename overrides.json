@@ -3,6 +3,11 @@
     "theme": "amperitycolors"
   },
 
+  "@jupyterlab/docmanager-extension:plugin":{
+    "autosave": true,
+    "autosaveInterval": 5
+  },
+
   "@jlab-enhanced/cell-toolbar:plugin":{
     "helperButtons": null,
     "leftMenu": null,

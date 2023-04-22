@@ -433,8 +433,8 @@ pyg_conf.set_config({'privacy': 'offline'})
                   if (code.includes('pyg.walk'))
                     code_to_run = import_ipywalker + code_to_run
 
-                  let import_bokeh = `
 
+                  let import_bokeh = `
 %pip install xyzservices==2023.2.0 bokeh==3.1.0
 from bokeh.plotting import output_notebook
 import pandas
@@ -444,8 +444,63 @@ output_notebook()
                   if (code.includes('import bokeh'))
                     code_to_run = import_bokeh + code_to_run
 
+                  let import_ipympl = `
+%pip install ipympl==0.9.3
+%matplotlib ipympl                  
+`
+                  if (code.includes('import ipympl'))
+                    code_to_run = import_ipympl + code_to_run
+
+
+                  let import_seaborn = `
+%pip install seaborn==0.12.2
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+`
+                  if (code.includes('import seaborn'))
+                    code_to_run = import_seaborn + code_to_run
+
+                  let import_ipywidgets = `
+%pip install ipywidgets==8.0.6 ipyvuetify==1.8.4 
+import ipywidgets as widgets
+import ipyvuetify as v
+import asyncio
+`
+                  if (code.includes('import ipywidgets'))
+                    code_to_run = import_ipywidgets + code_to_run                 
+
+                  let import_plotly = `
+%pip install nbformat==5.8.0 plotly==5.14.1
+import pandas as pd
+import plotly.express as px
+`
+                  if (code.includes('import plotly'))
+                    code_to_run = import_plotly + code_to_run                         
+
+                  let import_bqplot = `
+%pip install bqplot==0.12.38
+import bqplot.pyplot as plt
+import numpy as np
+`
+                  if (code.includes('import bqplot'))
+                    code_to_run = import_bqplot + code_to_run                         
+ 
+                  let import_altair = `
+%pip install altair=='5.0.0rc1'
+import altair as alt
+import pandas as pd
+`
+                  if (code.includes('import altair'))
+                    code_to_run = import_altair + code_to_run    
+
+                  let import_ipycytoscape = `
+%pip install ipycytoscape==1.3.3
+`
+                  if (code.includes('import ipycytoscape'))
+                    code_to_run = import_ipycytoscape + code_to_run                       
+                    
                 }
-               
                 async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
                 {
                   let t = sqlQueue.pushID(isSQLCell)
