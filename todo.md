@@ -2,12 +2,14 @@
 
 - animation of running icon
 - messages for !all for 100k, showing first 5000
-
-- help menu with links to all tools
-
+- when first creates a notebook have in the first cell
+#
 
 - feature flags 
     - 'analysis-notebooks' allows creating and viewing notebooks
+
+
+
 
 - clean code
 - stand up jupyter site like docsite 
@@ -27,6 +29,13 @@
     - if navigate to a document directly in edit, don't go past loading and show 'no access, request this document be published'
     - hides all docs not in publish state on list view
 
+
+
+
+
+# Use amperity() to view the notebook help
+# (press the 'play' button to the right to do so now)
+amperity()
 
 
 -- notebooks --
@@ -57,7 +66,7 @@ DataGrid(df[:5000], layout={ 'height' : '300px' }, auto_fit_columns = True)
 pyg.walk(df, dark='light')
 
 
--- code charts then publish ---
+-- code charts and publish ---
 publish
 
 import seaborn
@@ -71,7 +80,8 @@ https://matplotlib.org/ipympl/examples/full-example.html
 import bokeh in cell before where you want your graph
 https://docs.bokeh.org/en/latest/docs/gallery.html
 
-import plotly  + plotly express
+import plotly
+plotly express
 https://plotly.com/python/plotly-fundamentals/
 
 import bqplot
