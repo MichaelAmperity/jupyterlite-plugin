@@ -44,7 +44,7 @@ shift-enter
 
 restart kernal, reload or close and open the page
 
-save or ctrl-s update
+save or ctrl-s update, 5 seconds autosave
 
 switching between notebook and edit with esc or enter/click
 notebook mode
@@ -53,6 +53,10 @@ notebook mode
     - b, b
     - d, d
     - drag cells
+
+tab complete
+
+shift-tab to view doc for object function 
 
 -- run sql ---
 sql tag, toggle for current cell, view others
