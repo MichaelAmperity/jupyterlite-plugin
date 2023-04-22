@@ -56,7 +56,7 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.691a27aae0a2b3483a46.js",
+        "load": "static/remoteEntry.6efd616ddd2ad9bb1dca.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
@@ -488,6 +488,10 @@
             "rank": 50
           }
         ]
+      },
+      "@jupyterlab/docmanager-extension:plugin": {
+        "autosave": true,
+        "autosaveInterval": 5
       }
     },
     "settingsStorageDrivers": [
