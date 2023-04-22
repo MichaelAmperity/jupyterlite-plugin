@@ -425,7 +425,7 @@ sql_r.run_query("""${code}""")`
                 else //normal code cell
                 {
                   let import_ipywalker = `
-%pip install -q requests==2.28.2 pygwalker=='0.1.7a5'
+%pip install -q requests==2.28.2 pygwalker==0.1.7
 import pandas as pd
 import pygwalker as pyg, pygwalker.utils.config as pyg_conf
 pyg_conf.set_config({'privacy': 'offline'})
