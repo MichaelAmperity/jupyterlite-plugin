@@ -56,14 +56,14 @@
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.8cac96fd6efeaa2f5842.js",
+        "load": "static/remoteEntry.cf95216ebf1bc2bd5b49.js",
         "name": "amperityfrontend",
         "style": "./style"
       },
       {
         "extension": "./extension",
         "liteExtension": false,
-        "load": "static/remoteEntry.4e16238cdb1093cc4e2f.js",
+        "load": "static/remoteEntry.abd2b115dfa81f0281e6.js",
         "name": "bqplot"
       },
       {
