@@ -319,6 +319,9 @@ import asyncio
 from IPython.display import Javascript, clear_output
 from io import StringIO
 
+def amperity():
+  print('hi')
+
 class RunSQL:
     def __init__(self, containing_box, optional_callback_with_status_df=False, event_to_set=False, should_show_results=False, needs_to_unblock=False):
         self.containing_box = containing_box
@@ -500,7 +503,7 @@ import pandas as pd
                   if (code.includes('import ipycytoscape'))
                     code_to_run = import_ipycytoscape + code_to_run                       
                   
-                  if (code.includes('RunSQL('))
+                  if (code.includes('RunSQL(') || code.includes('amperity()'))
                     code_to_run = sql_lib + code_to_run
                 }
                 async function executeWait(code: string, output: OutputArea, sessionContext: ISessionContext, metadata?: JSONObject): Promise<KernelMessage.IExecuteReplyMsg | undefined>
