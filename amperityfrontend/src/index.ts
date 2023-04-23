@@ -310,8 +310,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
               try {
                 let code_to_run = code
                 let sql_lib = `
-%pip install -q ipywidgets==8.0.6 ipydatagrid==1.1.15
+%pip install -q ipywidgets==8.0.6 ipydatagrid==1.1.15 ipyvuetify==1.8.4 markdown==3.4.3
+import markdown
 import ipywidgets as widgets
+import ipyvuetify as v
 from ipydatagrid import DataGrid
 import re
 import pandas as pd
@@ -482,7 +484,7 @@ import plotly.express as px
                     code_to_run = import_plotly + code_to_run                         
 
                   let import_bqplot = `
-%pip install bqplot==0.12.38
+%pip install bqplot==0.12.39
 import bqplot.pyplot as plt
 import numpy as np
 `
