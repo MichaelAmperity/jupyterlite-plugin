@@ -323,7 +323,7 @@ from io import StringIO
 
 def amperity():
     t1 = "Using Notebooks"
-    c1 = '''\\
+    c1 = '''\
 
 ### Overview
 This analysis notebook is a way to visualize and dynamically explore the data in our databases. 
@@ -364,7 +364,7 @@ When in edit mode
 '''
     
     t2 ="Running SQL"
-    c2 = '''\\
+    c2 = '''\
 
 ### SQL tags
 
@@ -379,11 +379,11 @@ result is DataGrid
 a'''
 
     t3 ="Tableau-like Graph Builder"
-    c3 = '''\\
+    c3 = '''\
 pyg.walk(df, dark='light')'''
     
     t4 ="Charting libraries"
-    c4 ='''\\
+    c4 ='''\
 ### Importing
 Using one of the following imports will automatically load the right version and do any nessary setup
 
@@ -431,7 +431,7 @@ This is an option for node and tree style graphs
     c5 = """ """
     
     t6 ="Building dynamic widgets and apps"
-    c6 = '''\\
+    c6 = '''\
 Besides just charts and dashboards, you can also create interactive, app-like experiences. Ipywidgets allow web uis to bind to python functions, 
 ipyvueify gives the capibility to style these widgets with the entire Vueify library, and functions have been provided for dynamically running our Presto SQL.
 
