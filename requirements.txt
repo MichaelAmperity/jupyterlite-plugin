@@ -34,6 +34,7 @@ seaborn==0.12.2
 altair==5.0.0rc1
 ipyvuetify==1.8.4
 pygwalker==0.1.7
+markdown==3.4.3
 
 # Lab extensions
 jlab-enhanced-cell-toolbar==3.5.1
