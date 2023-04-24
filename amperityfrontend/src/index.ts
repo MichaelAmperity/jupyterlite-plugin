@@ -321,7 +321,7 @@ import asyncio
 from IPython.display import Javascript, clear_output
 from io import StringIO
 
-def amperity2():
+def amperity():
     t1 = "Using Notebooks"
     c1 = '''\
 
