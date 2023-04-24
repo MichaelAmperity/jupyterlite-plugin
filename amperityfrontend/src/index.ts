@@ -321,8 +321,152 @@ import asyncio
 from IPython.display import Javascript, clear_output
 from io import StringIO
 
-def amperity():
-  print('hi')
+def amperity2():
+    t1 = "Using Notebooks"
+    c1 = '''\
+
+### Overview
+This analysis notebook is a way to visualize and dynamically explore the data in our databases. 
+SQL queries will return data as a Pandas dataframe named 'df', for ease of manipulation in the python cells. 
+By default up to 1000 rows will be returned, but adding '!all' to the top of the query will allow up to 100,000 records to return.
+Because the python and data is all running locally in the browser 100k is the max that is supported.
+This makes this environment ideal for exploring data with SQL but not suited for doing ML or python data manipulation. 
+    
+### Running cells
+- Ctrl-enter will run the current cell
+- Shift-enter will run the current cell and move to the next one
+
+### Kernal status
+- All the python code runs on a webworker, as the kernal. 
+- The status is the circle in the top right. 
+- 0, 0 restarts the kernel, clearing all data.
+
+### Saving
+- The notebook will save automatically every 5 secs
+- Cmd-s/ctrl-s also saves
+- The 'Auto-saved a few seconds ago' message in the top bar will be accurate
+
+### Edit and notebook modes
+- Esc will go from edit mode to notebook mode
+- Clicking or pressing enter will go to edit mode
+
+When in edit mode
+- Arrow keys to navigate
+- a, a  to add a cell above
+- b, b to add a cell below
+- d, d to delete a cell
+- You can also drag cells around when grabbing the left of the input cell
+
+### Tab complete and inspection
+- Press tab to get code suggestions
+- Press shift-tab when the cursor is on a function or variable to inspect info
+
+'''
+    
+    t2 ="Running SQL"
+    c2 = '''\
+
+### SQL tags
+
+sql tag, toggle for current cell, view others
+delete and run buttons
+
+### Working with results
+!all
+df is dataframe
+result is DataGrid
+    DataGrid(df[:5000], layout={ 'height' : '300px' }, auto_fit_columns = True)"""
+a'''
+
+    t3 ="Tableau-like Graph Builder"
+    c3 = '''\
+pyg.walk(df, dark='light')'''
+    
+    t4 ="Charting libraries"
+    c4 ='''\
+### Importing
+Using one of the following imports will automatically load the right version and do any nessary setup
+
+*cmd+click/ctrl+click to open links in new tab*    
+
+### Seaborn
+    import seaborn
+Seaborn is a better matplotlib, straightforward and quality graphs 
+[seaborn docs](https://seaborn.pydata.org/examples/index.html)
+
+### IPYMPL
+    import ipympl
+Import this before Seaborn or Matplotlib to add zooming and interactivity automatically to them
+[ipympl docs](https://matplotlib.org/ipympl/examples/full-example.html)
+
+### Bokeh
+    import bokeh 
+Bokeh is a powerful and interactive library, that can be verbose.
+This must be imported in a cell before your graphs
+[Bokeh docs](https://docs.bokeh.org/en/latest/docs/gallery.html)
+
+### Plotly
+    import plotly
+Plotly express is accessible as px, it is much like Bokeh.
+[plotly docs](https://plotly.com/python/plotly-fundamentals/)
+
+### Bqplot
+    import bqplot
+A very lightweight option
+[Bqplot docs](https://bqplot.github.io/bqplot/)
+
+### Altair
+    import altair
+Altair is a customizable, flexible graphing library
+(Altair docs)[https://altair-viz.github.io/gallery/index.html]
+
+### Ipycytoscape
+    import ipycytoscape
+This is an option for node and tree style graphs
+[ipycytoscape](https://github.com/cytoscape/ipycytoscape)
+[parent cytoscape library](https://js.cytoscape.org/)
+    '''
+    
+    t5 ="Publishing"
+    c5 = """ """
+    
+    t6 ="Building dynamic widgets and apps"
+    c6 = '''\
+Besides just charts and dashboards, you can also create interactive, app-like experiences. Ipywidgets allow web uis to bind to python functions, 
+ipyvueify gives the capibility to style these widgets with the entire Vueify library, and functions have been provided for dynamically running our Presto SQL.
+
+
+
+    import ipywidgets
+This will include all that is needed for interactions. 'v' will allows vue widget creation using Ipyvuetify.
+
+(ipywidgets)[https://ipywidgets.readthedocs.io/en/latest/index.html]
+
+ipyvuetify
+[https://ipyvuetify.readthedocs.io/en/latest/usage.html]
+[https://v2.vuetifyjs.com/en/components/alerts/]
+
+The following sample allows SQL to be entered in a textbox, which runs when the button is pressed
+
+    import ipywidgets
+    output_for_sql = widgets.VBox()
+    def callback_for_sql(status, df_in):
+         pass
+    display(output_for_sql)
+    sql_r = RunSQL(output_for_sql, callback_for_sql, event_to_set=False)
+    v.Btn()
+    sql_r.run_query("select * from Customer360 limit 10")'''
+    
+    
+    panels = v.ExpansionPanels()
+    def make_panel(header, content):
+        return v.ExpansionPanel(children=
+                          [v.ExpansionPanelHeader(children=[header], class_='grey lighten-3'),
+                           v.ExpansionPanelContent(children=[widgets.HTML(markdown.markdown(content))])])
+    panels.children = [make_panel(t1,c1), make_panel(t2,c2),
+                       make_panel(t3,c3), make_panel(t4,c4),
+                       make_panel(t5,c5), make_panel(t6,c6)] 
+    return v.Row(justify="left", children=[panels])
 
 class RunSQL:
     def __init__(self, containing_box, optional_callback_with_status_df=False, event_to_set=False, should_show_results=False, needs_to_unblock=False):
